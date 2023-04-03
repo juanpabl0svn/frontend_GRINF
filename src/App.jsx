@@ -34,13 +34,12 @@ function App() {
 
   useEffect(() =>{
     if(!logIn) {return}
-    console.log("ag")
     window.location.href = `http://localhost:5173/${rol_page[logIn.rol]}`
   },[])
 
   return (
-    <div className="app">
-      <form className="container" onSubmit={submit}>
+    <div className="card">
+      <form className="form" onSubmit={submit}>
         <div className="data">
           <label htmlFor="username">Usuario</label>
           <div className="separator">

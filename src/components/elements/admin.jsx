@@ -1,11 +1,21 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 
-const Admin = () => {
+export default function NewUser(){
     return (
-    <div>
-        <h1>Admin</h1>
+    <div >
+        <form className="all" action="">
+            <input type="text" />
+            <input type="text" />
+            <input type="text" />
+            <input type="text" />
+            <input type="text" />
+        </form>
     </div>
     )
 }
 
-export default Admin
+export function hola(){
+    return (
+        <h1>New User</h1>
+    )
+}
