@@ -25,15 +25,15 @@ export default function NewUser(){
         e.preventDefault()
         if (data.role != 0){
             const new_user = JSON.stringify(data)
-            const req = await fetch(URL+`users/create/${new_user}`)
-            if (req.status != 200){
-                alert('usuario creaado')
-            }else{
-                alert('Error la crear usuarios')
-            }
+            const req = await fetch(URL+`users/${new_user}`,{method: 'POST'})
+            console.log(req)
+            // if (req.status != 200){
+            //     alert('usuario creado')
+            // }else{
+            //     alert('Error la crear usuario')
+            // }
             return
         }
-
         alert('Escoger rol para el usuario')
         put_white_values()
     }
@@ -67,7 +67,7 @@ export default function NewUser(){
                     <option value={3}>Colaborador</option>
                 </select>
             </div>
-            <input type="submit" />
+            <input type="submit" className='submit' />
         </form>
     </div>
     )
@@ -85,36 +85,68 @@ export function SearchUsers(){
 
     const [users,setUsers] = useState(null)
 
-    useEffect(async()=>{
-        if(users){return}
-        const users = await fetch(URL+`users/all`)
-        const res = await users.json()
-        setUsers(res)
+    const [pressed,setPress] = useState()
+
+    useEffect(() =>{
+        const res = fetch(`${URL}users`)
+            .then(data => data.json())
+            .then(info => setUsers(info))
     },[])
 
     return(
-        <div className="all scroll">
+        <div className="all">
             <div className="table">
-                <h4>ID</h4>
-                <h4>Usuario</h4>
-                <h4>Nombre</h4>
-                <h4>Apellido</h4>
-                <h4>Email</h4>
-                <h4>Rol</h4>
+                <div className="title-item">
+                    <h4>ID</h4>
+                </div>
+                <div className="title-item">
+                    <h4>Usuario</h4>
+                </div>
+                <div className="title-item">
+                    <h4>Nombre</h4>
+                </div>
+                <div className="title-item">
+                    <h4>Apellido</h4>
+                </div>
+                <div className="title-item">
+                    <h4>Email</h4>
+                </div>
+                <div className="title-item">
+                    <h4>Rol</h4>
+                </div>
             </div>
-            {
-                users!==null ? users.map(({id,username,name,surname,email,rol})=>{
-                    <div className="user-data">
-                        <p>{id}</p>
-                        <p>{username}</p>
-                        <p>{name}</p>
-                        <p>{surname}</p>
-                        <p>{email}</p>
-                        <p>{rol}</p>
-                    </div>
-
-                }):<h1>Sin registros</h1>
-            }
+            <div className="scroll">
+                {
+                    users!==null ? users.map(({id_user,username,name,surname,email,role})=>{
+                    return(
+                        <div className="user-data">
+                            <div className="item">
+                                <input type="button" className='select-user'/>
+                            </div>
+                            <div className="item">
+                                <p>{id_user}</p>
+                            </div>
+                            <div className="item">
+                                <p>{username}</p>
+                            </div>
+                            <div className="item">
+                                <p>{name}</p>
+                            </div>
+                            <div className="item">
+                                <p>{surname}</p>
+                            </div>
+                            <div className="item">
+                                <p>{email}</p>
+                            </div>
+                            <div className="item">
+                                <p>{role}</p>
+                            </div>
+                        </div>
+                        )
+                    }):<h1>Cargando...</h1>
+                }
+            </div>
         </div>
     )
 }
+

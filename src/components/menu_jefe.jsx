@@ -1,5 +1,4 @@
 import { useState } from "react"
-import './menu.css'
 
 
 const MenuJefe = () =>{

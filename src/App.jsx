@@ -24,7 +24,7 @@ function App() {
       const data = await res.json()
       if (data){
         setLogIn(JSON.stringify(data))
-        window.location.href = `http://localhost:5173/${rol_page[data.rol]}`
+        window.location.href = `http://localhost:5173/${rol_page[data.role]}`
       }
     }
     catch(err) {

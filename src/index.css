@@ -111,15 +111,46 @@ a:hover{
 }
 
 .scroll{
-  overflow: auto;
+  position: absolute;
+  top: 60px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+
+  width: 79vw;
+  height: 50vh;
+
+  overflow:auto;
+
+  margin-top: 20px;
+
+
 }
 
 .table{
   position: absolute;
   top: 20px;
+  left: 90px;
+
   display: flex;
-  gap: 25px;
-  margin-left: 40px;
+  justify-content: center;
+  align-items: center;
+
+  width: 75vw;
+  gap: 70px;
+}
+
+.title-item{
+  display: flex;
+  justify-content: center;
+  width: 5vw;
+}
+
+.submit{
+  position: relative;
+  top:0px;
 }
 
 
@@ -128,3 +159,32 @@ a:hover{
   top: -80px;
   right: 0px;
 }
+
+.user-data{
+  display: flex;
+  justify-content: center;
+  width: 70vw;
+  background: #f7e0e0;
+  border-radius: 20px;
+  margin-left: 50px;
+}
+
+.select-user{
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.item{
+  display: flex;
+  width: 70vw;
+  align-items:center;
+  justify-content: center;
+}
+
+.pressed{
+  background: #0751f1;
+}
+
+

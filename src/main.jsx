@@ -7,14 +7,14 @@ import Colaborador from './components/elements/colaborador'
 import MenuAdmin from './components/menu_admin'
 
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
     <Routes>
       <Route path='/' element={<App/>}/>
-      <Route path='/admin' element={<Admin/>}/>
+      <Route path='/admin' element={<MenuAdmin/>}/>
       <Route path='/jefe' element={<Jefe/>}/>
       <Route path='/colaborador' element={<Colaborador/>}/>
-      <Route path='/menu' element={<MenuAdmin/>}/>
     </Routes>
   </BrowserRouter>,
 )
