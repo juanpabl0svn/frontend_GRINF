@@ -1,5 +1,7 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import NewUser,{CreateInf,SearchUsers} from './elements/admin'
+import User from './elements/user_info'
+import { URL_WEB } from '../App'
 
 document.title = 'Admin'
 
@@ -11,13 +13,24 @@ const pages = {
 
 const MenuAdmin = () => {
 
+  const user = JSON.parse(window.sessionStorage.getItem('user')) || null
+
+  useEffect(() => {
+    if (!user) {
+        window.location.href = URL_WEB
+    }
+    if(`/${user.role_name}` != location.pathname){
+      window.location.href = URL_WEB + user.role_name
+    }
+}
+,[])
+
   const [page, setPage] = useState(1)
+
 
   return (
     <div className='page'>
-      <div className="user-main">
-        <p>Info user</p>
-      </div>
+      <User/>
       <header>
         <nav>
           <a href=""><input type="button" value="Nuevo usuario" onClick={(e)=>{

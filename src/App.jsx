@@ -3,17 +3,14 @@ import './index.css'
 
 export const URL = 'http://localhost:3000/'
 
-const rol_page = {
-  1:'admin',
-  2:'jefe',
-  3:'colaborador'
-}
+export const URL_WEB = 'http://localhost:5173/'
+
 
 function App() {
 
   const [user,setUser] = useState({username:'',password:''})
 
-  const logIn =JSON.parse(window.sessionStorage.getItem('user')) || null
+  const logIn = JSON.parse(window.sessionStorage.getItem('user')) || null
 
   const setLogIn = (data) => {window.sessionStorage.setItem('user',data)}
 
@@ -24,7 +21,7 @@ function App() {
       const data = await res.json()
       if (data){
         setLogIn(JSON.stringify(data))
-        window.location.href = `http://localhost:5173/${rol_page[data.role]}`
+        window.location.href =URL_WEB + data.role_name
       }
     }
     catch(err) {
@@ -34,7 +31,7 @@ function App() {
 
   useEffect(() =>{
     if(!logIn) {return}
-    window.location.href = `http://localhost:5173/${rol_page[logIn.rol]}`
+    window.location.href = URL_WEB + logIn.role_name
   },[])
 
   return (

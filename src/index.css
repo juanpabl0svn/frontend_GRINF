@@ -125,8 +125,6 @@ a:hover{
   overflow:auto;
 
   margin-top: 20px;
-
-
 }
 
 .table{
@@ -150,7 +148,7 @@ a:hover{
 
 .submit{
   position: relative;
-  top:0px;
+  bottom: 20px;
 }
 
 

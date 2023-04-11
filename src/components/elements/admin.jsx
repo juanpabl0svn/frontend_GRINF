@@ -16,7 +16,7 @@ export default function NewUser(){
             name:'',
             surname:'',
             email: '',
-            birthdate: 'dd/mm/yyy',
+            birthdate: '',
             role:'0'
         })
     }
@@ -27,11 +27,11 @@ export default function NewUser(){
             const new_user = JSON.stringify(data)
             const req = await fetch(URL+`users/${new_user}`,{method: 'POST'})
             console.log(req)
-            // if (req.status != 200){
-            //     alert('usuario creado')
-            // }else{
-            //     alert('Error la crear usuario')
-            // }
+            if (req.status === 200){
+                alert('usuario creado')
+            }else{
+                alert('Error la crear usuario')
+            }
             return
         }
         alert('Escoger rol para el usuario')
@@ -67,7 +67,7 @@ export default function NewUser(){
                     <option value={3}>Colaborador</option>
                 </select>
             </div>
-            <input type="submit" className='submit' />
+            <input type="submit" className='submit' value='Crear'/>
         </form>
     </div>
     )
@@ -117,7 +117,7 @@ export function SearchUsers(){
             </div>
             <div className="scroll">
                 {
-                    users!==null ? users.map(({id_user,username,name,surname,email,role})=>{
+                    users!==null ? users.map(({id_user,username,name,surname,email,role_name})=>{
                     return(
                         <div className="user-data">
                             <div className="item">
@@ -139,7 +139,7 @@ export function SearchUsers(){
                                 <p>{email}</p>
                             </div>
                             <div className="item">
-                                <p>{role}</p>
+                                <p>{role_name}</p>
                             </div>
                         </div>
                         )
