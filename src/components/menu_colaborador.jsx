@@ -1,15 +1,20 @@
 import User from "./elements/user_info";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { URL_WEB } from '../App'
 import { useLocation } from 'react-router-dom';
+import AddData from "./elements/colaborador";
 
-
+const pages  = {
+  1:<AddData/>
+}
 
 const MenuColaborador = () =>{
 
   const user = JSON.parse(window.sessionStorage.getItem('user')) || null
 
   const location = useLocation()
+
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     if (!user) {
@@ -25,10 +30,10 @@ const MenuColaborador = () =>{
           <User/>
           <header>
             <nav>
-              <a href=""><input type="button" value="Nuevo usuario" onClick={(e)=>{
+              <a href=""><input type="button" value="Agregar datos" onClick={(e)=>{
                 e.preventDefault();
                 setPage(1)}}/></a>
-              <a href=""><input type="button" value="Informe" onClick={(e)=>{
+              <a href=""><input type="button" value="Actividades" onClick={(e)=>{
                 e.preventDefault()
                 setPage(2)}} /></a>
               <a href=""><input type="button" value="Usuarios" onClick={(e)=>{
@@ -37,7 +42,7 @@ const MenuColaborador = () =>{
               </nav>
           </header>
           <div className="all">
-              {/* {pages[page] || <h1>Error</h1>} */}
+              {pages[page] || <h1>Error</h1>}
           </div>
         </div>
     )

@@ -39,7 +39,7 @@ html{
 }
 
 
-#password,#username{
+#password,#username,#new_password{
   padding: 8px 20px;
   margin: 15px 0;
   border-radius: 20px;
@@ -61,6 +61,8 @@ input[type="submit"]{
   border-radius: 10px;
   width: 8vw;
   height: 5vh;
+  background: #2466f7;
+  color: white;
 }
 
 a{
@@ -184,5 +186,47 @@ a:hover{
 .pressed{
   background: #0751f1;
 }
+
+
+
+/**/
+.data-colab{
+  display: flex;
+  justify-content: space-between;
+  width: 25vw;
+  margin: 10px;
+}
+
+.colab-container{
+  display: flex;
+  flex-direction: column;
+  align-items: left ;
+  width: 30vw;
+  gap: 10px;
+}
+
+.description{
+  height:10vh;
+  width: 170px;
+  resize: none;
+}
+.time{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 17px;
+  right: 330px;
+  gap: 4px;
+}
+
+.time-box{
+  width: 15px;
+}
+.send-data{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 
 

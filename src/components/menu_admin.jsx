@@ -2,6 +2,7 @@ import React,{useState, useEffect} from 'react'
 import NewUser,{CreateInf,SearchUsers} from './elements/admin'
 import User from './elements/user_info'
 import { URL_WEB } from '../App'
+import { useLocation } from 'react-router-dom';
 
 document.title = 'Admin'
 
@@ -14,6 +15,8 @@ const pages = {
 const MenuAdmin = () => {
 
   const user = JSON.parse(window.sessionStorage.getItem('user')) || null
+
+  const location = useLocation()
 
   useEffect(() => {
     if (!user) {

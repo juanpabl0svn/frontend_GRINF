@@ -4,6 +4,7 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import MenuAdmin from './components/menu_admin'
 import MenuJefe from './components/menu_jefe'
 import MenuColaborador from './components/menu_colaborador'
+import ChangePassword from './components/change_password'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -12,6 +13,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Route path='/admin' element={<MenuAdmin/>}/>
       <Route path='/jefe' element={<MenuJefe/>}/>
       <Route path='/colaborador' element={<MenuColaborador/>}/>
+      <Route path='/clave' element={<ChangePassword/>}/>
+
     </Routes>
   </BrowserRouter>,
 )

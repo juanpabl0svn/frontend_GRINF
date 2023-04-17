@@ -50,8 +50,8 @@ function App() {
           </div>      
         </div>
         <div className="actions">
-          <a href="#">¿Olvidaste tu contraseña?</a>
-          <input type="submit" value={'Ingresar'}/>
+          <a href="/clave">¿Olvidaste tu contraseña?</a>
+          <input type="submit" value='Ingresar'/>
         </div>
       </form>
     </div>
