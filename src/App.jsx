@@ -21,7 +21,7 @@ function App() {
       const data = await res.json()
       if (data){
         setLogIn(JSON.stringify(data))
-        window.location.href =URL_WEB + data.role_name
+        window.location.href =URL_WEB + data.role_description
       }
     }
     catch(err) {
@@ -31,7 +31,7 @@ function App() {
 
   useEffect(() =>{
     if(!logIn) {return}
-    window.location.href = URL_WEB + logIn.role_name
+    window.location.href = URL_WEB + logIn.role_description
   },[])
 
   return (

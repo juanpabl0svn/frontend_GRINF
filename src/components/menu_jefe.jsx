@@ -13,8 +13,8 @@ const MenuJefe = () => {
     window.location.href = URL_WEB;
     return;
   }
-  if (`/${user.role_name}` != location.pathname) {
-    window.location.href = URL_WEB + user.role_name;
+  if (`/${user.role_description}` != location.pathname) {
+    window.location.href = URL_WEB + user.role_description;
     return;
   }
 

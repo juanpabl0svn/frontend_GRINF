@@ -4,19 +4,17 @@ import { URL_WEB } from "../App";
 import { useLocation } from "react-router-dom";
 import AddData from "./elements/colaborador";
 
-
 const MenuColaborador = () => {
-
   const user = JSON.parse(window.sessionStorage.getItem("user")) || null;
   const location = useLocation();
-  
+
   if (!user) {
     window.location.href = URL_WEB;
-    return
+    return;
   }
-  if (`/${user.role_name}` != location.pathname) {
-    window.location.href = URL_WEB + user.role_name;
-    return
+  if (`/${user.role_description}` != location.pathname) {
+    window.location.href = URL_WEB + user.role_description;
+    return;
   }
 
   const [page, setPage] = useState(1);

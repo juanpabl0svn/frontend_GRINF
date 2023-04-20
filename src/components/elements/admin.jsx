@@ -6,8 +6,8 @@ export default function NewUser() {
     name: "",
     surname: "",
     email: "",
-    birthdate: "",
-    role: "0",
+    role: 0,
+    area: 0,
   });
 
   const putWhiteValues = () => {
@@ -15,17 +15,16 @@ export default function NewUser() {
       name: "",
       surname: "",
       email: "",
-      birthdate: "",
-      role: "0",
+      role: 0,
+      area: 0,
     });
   };
 
   const sendUserData = async (e) => {
     e.preventDefault();
-    if (data.role != 0) {
+    if (data.role != 0 && data.area != 0) {
       const newUser = JSON.stringify(data);
       const req = await fetch(URL + `users/${newUser}`, { method: "POST" });
-      console.log(req);
       if (req.status === 200) {
         alert("usuario creado");
         putWhiteValues();
@@ -34,8 +33,19 @@ export default function NewUser() {
       }
       return;
     }
-    alert("Escoger rol para el usuario");
+    alert("Diligencie todo el formulario");
   };
+
+  const [areas, setAreas] = useState(null);
+
+  useEffect(() => {
+    if (areas === null) {
+      fetch(URL + "areas")
+        .then((res) => res.json())
+        .then((area) => setAreas(area));
+    }
+    return;
+  }, [areas]);
 
   return (
     <div>
@@ -50,7 +60,7 @@ export default function NewUser() {
             value={data.name}
             onChange={(e) => {
               setData({ ...data, name: e.target.value });
-              console.log(data)
+              console.log(data);
             }}
           />
         </div>
@@ -81,43 +91,39 @@ export default function NewUser() {
           />
         </div>
         <div className="info">
-          <label htmlFor="date">Fecha nacimiento</label>
-          <input
-            type="date"
-            id="date"
-            className="form-user"
-            requiredvalue={data.date}
-            onChange={(e) => {
-              setData({ ...data, birthdate: e.target.value });
-            }}
-          />
-        </div>
-        <div className="info">
           <label htmlFor="role">Rol</label>
           <select
             name="role"
             id="role"
             className="form-user"
+            value={data.role}
             onChange={(e) => setData({ ...data, role: e.target.value })}
           >
             <option value={0}>Seleccione un rol</option>
-            <option value={1}>Admin</option>
-            <option value={2}>Jefe Area</option>
-            <option value={3}>Colaborador</option>
+            <option value={1}>ADMIN</option>
+            <option value={2}>JEFE AREA</option>
+            <option value={3}>COLABORADOR</option>
           </select>
         </div>
         <div className="info">
-          <label htmlFor="role">Rol</label>
+          <label htmlFor="role">Area</label>
           <select
             name="role"
             id="role"
             className="form-user"
-            onChange={(e) => setData({ ...data, role: e.target.value })}
+            value={data.area}
+            onChange={(e) => setData({ ...data, area: e.target.value })}
           >
             <option value={0}>Seleccione una área</option>
-            <option value={1}>Admin</option>
-            <option value={2}>Jefe Area</option>
-            <option value={3}>Colaborador</option>
+            {areas != null
+              ? areas.map((area, index) => {
+                  return (
+                    <option key={index} value={index + 1}>
+                      {area.area_description.toUpperCase()}
+                    </option>
+                  );
+                })
+              : null}
           </select>
         </div>
         <input type="submit" className="submit" value="Crear" />
@@ -140,10 +146,13 @@ export function SearchUsers() {
   const [userData, setUserData] = useState();
 
   useEffect(() => {
-    fetch(`${URL}users`)
-      .then((data) => data.json())
-      .then((info) => setUsers(info));
-  }, []);
+    if (users == null) {
+      fetch(URL + "users")
+        .then((data) => data.json())
+        .then((info) => setUsers(info));
+    }
+    return
+  }, [users]);
 
   function ShowData() {
     console.log(userData[1]);
@@ -193,7 +202,18 @@ export function SearchUsers() {
       <div className="scroll">
         {users !== null ? (
           users.map(
-            ({ id_user, username, name, surname, email, role_name }, index) => {
+            (
+              {
+                id_user,
+                username,
+                name,
+                surname,
+                email,
+                role_description,
+                area_description,
+              },
+              index
+            ) => {
               return (
                 <div className="user-data">
                   <div className="item">
@@ -219,10 +239,10 @@ export function SearchUsers() {
                     <p>{email}</p>
                   </div>
                   <div className="item">
-                    <p>{role_name}</p>
+                    <p>{role_description}</p>
                   </div>
                   <div className="item">
-                    <p>AREA</p>
+                    <p>{area_description}</p>
                   </div>
                 </div>
               );
