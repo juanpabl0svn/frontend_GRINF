@@ -151,7 +151,7 @@ export function SearchUsers() {
         .then((data) => data.json())
         .then((info) => setUsers(info));
     }
-    return
+    return;
   }, [users]);
 
   function ShowData() {
@@ -165,7 +165,7 @@ export function SearchUsers() {
           <input
             type="text"
             onChange={() => {}}
-            value={userData[0].role_name}
+            value={userData[0].role_description}
           />
 
           <input type="submit" value="Salir" />

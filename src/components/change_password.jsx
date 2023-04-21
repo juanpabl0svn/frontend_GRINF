@@ -23,7 +23,7 @@ export default function ChangePassword() {
         const res = await req.json();
         const user = JSON.stringify(res)
         window.sessionStorage.setItem('user',user);
-        window.location.href = `${URL_WEB + res.role_name}`
+        window.location.href = `${URL_WEB + res.role_description}`
       } else {
         alert("Error !!");
       }
