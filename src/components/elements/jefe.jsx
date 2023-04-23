@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { URL } from "../../App";
 
 const CreateActivity = () => {
-
   const [activity, setActivity] = useState({
     title: "",
     mandated: "",
@@ -21,7 +20,7 @@ const CreateActivity = () => {
       date_start: "",
       date_end: "",
     });
-  }
+  };
 
   const [areas, setAreas] = useState(null);
 
@@ -36,9 +35,12 @@ const CreateActivity = () => {
     return;
   }, [areas]);
 
+  const area = JSON.parse(window.sessionStorage.getItem("user"));
+
   useEffect(() => {
     if (users == null) {
-      fetch(URL + "colab")
+      console.log(area.id_area);
+      fetch(URL + `colab/${area.id_area}`)
         .then((data) => data.json())
         .then((info) => {
           console.log(info);
@@ -48,13 +50,15 @@ const CreateActivity = () => {
     return;
   }, [users]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (activity.encargado === 0) {
+    if (activity.mandated === 0) {
       alert("Ingrese encargado");
+      return;
     }
     if (activity.relevance === 0) {
       alert("Ingrese relevancia");
+      return;
     }
     activity.title = activity.title
       .toLowerCase()
@@ -64,19 +68,16 @@ const CreateActivity = () => {
         return upper + el.slice(1, el.length);
       })
       .join(" ");
-    
-    console.log(activity);
     const data = JSON.stringify(activity);
-    const res = fetch(URL + `activity/${data}`, { method: "POST" })
-    .then(res => res.json())
-    .then(info => {return info})
-    console.log(res)
+    const req = await fetch(URL + `activity/${data}`, { method: "POST" });
+    const res = await req.json();
+    console.log(res);
 
-    if (info.status === 200){
-      alert('actividad creada')
-      setWhiteValues()
-    }else{
-      alert('Error!! ')
+    if (res.status === 200) {
+      alert("actividad creada");
+      setWhiteValues();
+    } else {
+      alert("Error!! ");
     }
   };
 
@@ -105,9 +106,10 @@ const CreateActivity = () => {
             id="role"
             className="text-box"
             value={activity.mandated}
-            onChange={(e) =>
-              setActivity({ ...activity, mandated: parseInt(e.target.value) })
-            }
+            onChange={(e) => {
+              setActivity({ ...activity, mandated: parseInt(e.target.value) });
+              console.log(activity);
+            }}
           >
             <option value={0}>Escoger encargado</option>
             {users != null
@@ -159,11 +161,25 @@ const CreateActivity = () => {
 
         <div className="data-colab">
           <label htmlFor="">Inicio</label>
-          <input type="date" className="text-box" value={activity.date_start} onChange={(e)=> setActivity({...activity,date_start: e.target.value})} />
+          <input
+            type="date"
+            className="text-box"
+            value={activity.date_start}
+            onChange={(e) =>
+              setActivity({ ...activity, date_start: e.target.value })
+            }
+          />
         </div>
         <div className="data-colab">
           <label htmlFor="">Fin</label>
-          <input type="date" className="text-box" value={activity.date_end} onChange={(e)=> setActivity({...activity,date_end: e.target.value})} />
+          <input
+            type="date"
+            className="text-box"
+            value={activity.date_end}
+            onChange={(e) =>
+              setActivity({ ...activity, date_end: e.target.value })
+            }
+          />
         </div>
       </div>
       <div className="send">
@@ -221,17 +237,14 @@ export const GetActivities = () => {
                 relevance,
                 date_start,
                 date_end,
-                state_description
+                state_description,
               },
               index
             ) => {
               return (
                 <div className="user-data">
                   <div className="item">
-                    <input
-                      type="button"
-                      className="select-user"
-                    />
+                    <input type="button" className="select-user" />
                   </div>
                   <div className="item">
                     <p>{id_activity}</p>

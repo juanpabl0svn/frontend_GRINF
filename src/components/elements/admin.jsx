@@ -118,7 +118,7 @@ export default function NewUser() {
             {areas != null
               ? areas.map((area, index) => {
                   return (
-                    <option key={index} value={index + 1}>
+                    <option key={index} value={area.id_area}>
                       {area.area_description.toUpperCase()}
                     </option>
                   );
@@ -155,20 +155,123 @@ export function SearchUsers() {
   }, [users]);
 
   function ShowData() {
-    console.log(userData[1]);
+    const [areas, setAreas] = useState(null);
+
+    const [newData, setNewData] = useState({
+      username: userData[0].username,
+      id_user: userData[0].id_user,
+      name: userData[0].name,
+      surname: userData[0].surname,
+      email: userData[0].email,
+      id_role: userData[0].id_role,
+      id_area: userData[0].id_area,
+    });
+
+    useEffect(() => {
+      if (areas === null) {
+        fetch(URL + "areas")
+          .then((res) => res.json())
+          .then((area) => {
+            setAreas(area);
+          });
+      }
+      return;
+    }, [areas]);
+
     return (
       <div className="box">
         <form onSubmit={() => setUserData()} className="change-user">
-          <input type="text" onChange={() => {}} value={userData[0].name} />
-          <input type="text" onChange={() => {}} value={userData[0].surname} />
-          <input type="text" onChange={() => {}} value={userData[0].email} />
+        <input
+            type="text"
+            onChange={(e) => {
+              const value = e.target.value;
+              if (!value.startsWith(" ")) {
+                setNewData({ ...newData, username: value });
+              }
+            }}
+            value={newData.username}
+          />
           <input
             type="text"
-            onChange={() => {}}
-            value={userData[0].role_description}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (!value.startsWith(" ")) {
+                setNewData({ ...newData, name: value });
+              }
+            }}
+            value={newData.name}
+          />
+          <input
+            type="text"
+            onChange={(e) => {
+              const value = e.target.value;
+              if (!value.startsWith(" ")) {
+                setNewData({ ...newData, surname: value });
+              }
+            }}
+            value={newData.surname}
+          />
+          <input
+            type="text"
+            onChange={(e) => {
+              const value = e.target.value;
+              if (!value.startsWith(" ")) {
+                setNewData({ ...newData, email: value });
+              }
+            }}
+            value={newData.email}
+          />
+          <select
+            name="role"
+            id="role"
+            value={newData.id_role}
+            onChange={(e) =>
+              setNewData({ ...newData, id_role: e.target.value })
+            }
+          >
+            <option value={1}>ADMIN</option>
+            <option value={2}>JEFE AREA</option>
+            <option value={3}>COLABORADOR</option>
+          </select>
+          <select
+            name="role"
+            id="role"
+            value={newData.id_area}
+            onChange={(e) =>
+              setNewData({ ...newData, id_area: e.target.value })
+            }
+          >
+            {areas != null
+              ? areas.map((area, index) => {
+                  return (
+                    <option key={index} value={area.id_area}>
+                      {area.area_description.toUpperCase()}
+                    </option>
+                  );
+                })
+              : null}
+          </select>
+
+          <input
+            type="button"
+            className="user-save-data"
+            value="Guardar"
+            onClick={async(e) => {
+              e.preventDefault()
+              const newDataString = JSON.stringify(newData)
+              const req = await fetch(URL + `users/${newDataString}`,{method: 'PUT'})
+              setUserData()
+              setUsers(null)
+
+            }}
           />
 
-          <input type="submit" value="Salir" />
+          <input
+            type="button"
+            className="user-save-data"
+            value="Salir"
+            onClick={() => setUserData()}
+          />
         </form>
       </div>
     );

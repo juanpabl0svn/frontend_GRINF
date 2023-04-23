@@ -40,26 +40,6 @@ const MenuColaborador = () => {
               }}
             />
           </a>
-          <a href="">
-            <input
-              type="button"
-              value="Actividades"
-              onClick={(e) => {
-                e.preventDefault();
-                setPage(2);
-              }}
-            />
-          </a>
-          <a href="">
-            <input
-              type="button"
-              value="Usuarios"
-              onClick={(e) => {
-                e.preventDefault();
-                setPage(3);
-              }}
-            />
-          </a>
         </nav>
       </header>
       <div className="all">{pages[page] || <h1>Error</h1>}</div>

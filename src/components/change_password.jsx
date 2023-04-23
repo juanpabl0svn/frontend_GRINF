@@ -2,7 +2,6 @@ import { useState } from "react";
 import { URL, URL_WEB } from "../App";
 
 export default function ChangePassword() {
-  
   const [data, setData] = useState({
     username: "",
     password: "",
@@ -15,15 +14,15 @@ export default function ChangePassword() {
     const dataString = JSON.stringify(data);
 
     if (data.password === data.new_password) {
-      const req = await fetch(URL + `users/${dataString}`, { method: "PUT" });
+      const req = await fetch(URL + `password/${dataString}`, { method: "PUT" });
       if (req.status === 200) {
         alert(
           `Contraseña correctamente guardada, su nueva contraseña es ${data.password}`
         );
         const res = await req.json();
-        const user = JSON.stringify(res)
-        window.sessionStorage.setItem('user',user);
-        window.location.href = `${URL_WEB + res.role_description}`
+        const user = JSON.stringify(res);
+        window.sessionStorage.setItem("user", user);
+        window.location.href = `${URL_WEB + res.role_description}`;
       } else {
         alert("Error !!");
       }
@@ -32,10 +31,9 @@ export default function ChangePassword() {
     alert("Contraseñas no coinciden");
   };
 
-
   return (
     <div className="card">
-      <form className="form" onSubmit={(e) =>setPassword(e)}>
+      <form className="form" onSubmit={(e) => setPassword(e)}>
         <div className="data">
           <label htmlFor="username" id="username-label">
             Usuario
@@ -87,7 +85,7 @@ export default function ChangePassword() {
           <label>
             <a href="/">Volver</a>
           </label>
-          <input type="submit" value="Cambiar" />
+          <input type="submit" value="Cambiar" className="log-in-button" />
         </div>
       </form>
     </div>
