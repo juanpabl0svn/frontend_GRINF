@@ -16,6 +16,7 @@ const User = () => {
   return (
     <div className="user-main">
       <p>{user.name}</p>
+      <p>{user.area_description}</p>
       <input
         type="button"
         value="Salir"

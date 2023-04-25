@@ -188,7 +188,7 @@ const CreateActivity = () => {
 };
 
 export const GetActivities = () => {
-  const [activities, setActivities] = useState(null);
+  const [activities, setActivities] = useState();
 
   const [activityData, setActivityData] = useState();
 
@@ -228,7 +228,7 @@ export const GetActivities = () => {
       return;
     }, [colab]);
 
-    console.log(newData);
+    console.log(activityData);
 
     return (
       <div className="box">
@@ -257,7 +257,7 @@ export const GetActivities = () => {
               onChange={(e) => {
                 setNewData({
                   ...newData,
-                  mandated: parseInt(e.target.value),
+                  activity_mandated: parseInt(e.target.value),
                 });
               }}
             >
@@ -331,12 +331,37 @@ export const GetActivities = () => {
               }
             >
               <option value={1}>ACTIVO</option>
-              <option value={2}>PENDIENTE</option>
-              <option value={3}>INACTIVO</option>
+              <option value={2}>INACTIVO</option>
+              <option value={3}>PENDIENTE</option>
             </select>
           </div>
-          <input type="button" value="Guardar" className="user-save-data" onClick={() => setActivityData()} />
-          <input type="button" value="Salir" className="user-save-data" onClick={() => setActivityData()} />
+          <input
+            type="button"
+            value="Guardar"
+            className="user-save-data"
+            onClick={async() => {
+
+              setNewData({...newData, date_end: (newData.date_end).split('-').join('/')})
+
+              const newDataString = JSON.stringify(newData)
+
+              const req = await fetch(URL + `activity/${newDataString}`,{method: "PUT"})
+
+              if (req.ok){
+                alert('Actividad Guardada con exito')
+              }else{
+                alert('algo salio mal')
+              }
+              setActivityData();
+              setActivities()
+            }}
+          />
+          <input
+            type="button"
+            value="Salir"
+            className="user-save-data"
+            onClick={() => setActivityData()}
+          />
         </div>
       </div>
     );
@@ -369,7 +394,7 @@ export const GetActivities = () => {
         </div>
       </div>
       <div className="scroll">
-        {activities !== null ? (
+        {activities  ? (
           activities.map(
             (
               {
