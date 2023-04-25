@@ -25,7 +25,7 @@ export default function NewUser() {
     if (data.role != 0 && data.area != 0) {
       const newUser = JSON.stringify(data);
       const req = await fetch(URL + `users/${newUser}`, { method: "POST" });
-      if (req.status === 200) {
+      if (req.ok) {
         alert("usuario creado");
         putWhiteValues();
       } else {
@@ -126,7 +126,7 @@ export default function NewUser() {
               : null}
           </select>
         </div>
-        <input type="submit" className="submit" value="Crear" />
+        <input type="submit" className="log-in-button" value="Crear" />
       </form>
     </div>
   );
@@ -141,7 +141,7 @@ export function CreateInf() {
 }
 
 export function SearchUsers() {
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState();
 
   const [userData, setUserData] = useState();
 
@@ -154,7 +154,7 @@ export function SearchUsers() {
     return;
   }, [users]);
 
-  function ShowData() {
+  function ChangeUser() {
     const [areas, setAreas] = useState(null);
 
     const [newData, setNewData] = useState({
@@ -168,7 +168,7 @@ export function SearchUsers() {
     });
 
     useEffect(() => {
-      if (areas === null) {
+      if (!areas) {
         fetch(URL + "areas")
           .then((res) => res.json())
           .then((area) => {
@@ -181,88 +181,122 @@ export function SearchUsers() {
     return (
       <div className="box">
         <form onSubmit={() => setUserData()} className="change-user">
-        <input
-            type="text"
-            onChange={(e) => {
-              const value = e.target.value;
-              if (!value.startsWith(" ")) {
-                setNewData({ ...newData, username: value });
-              }
-            }}
-            value={newData.username}
-          />
-          <input
-            type="text"
-            onChange={(e) => {
-              const value = e.target.value;
-              if (!value.startsWith(" ")) {
-                setNewData({ ...newData, name: value });
-              }
-            }}
-            value={newData.name}
-          />
-          <input
-            type="text"
-            onChange={(e) => {
-              const value = e.target.value;
-              if (!value.startsWith(" ")) {
-                setNewData({ ...newData, surname: value });
-              }
-            }}
-            value={newData.surname}
-          />
-          <input
-            type="text"
-            onChange={(e) => {
-              const value = e.target.value;
-              if (!value.startsWith(" ")) {
-                setNewData({ ...newData, email: value });
-              }
-            }}
-            value={newData.email}
-          />
-          <select
-            name="role"
-            id="role"
-            value={newData.id_role}
-            onChange={(e) =>
-              setNewData({ ...newData, id_role: e.target.value })
-            }
-          >
-            <option value={1}>ADMIN</option>
-            <option value={2}>JEFE AREA</option>
-            <option value={3}>COLABORADOR</option>
-          </select>
-          <select
-            name="role"
-            id="role"
-            value={newData.id_area}
-            onChange={(e) =>
-              setNewData({ ...newData, id_area: e.target.value })
-            }
-          >
-            {areas != null
-              ? areas.map((area, index) => {
-                  return (
-                    <option key={index} value={area.id_area}>
-                      {area.area_description.toUpperCase()}
-                    </option>
-                  );
-                })
-              : null}
-          </select>
+          <div className="user-edit">
+            <label htmlFor="">Usuario</label>
+            <input
+              type="text"
+              onChange={(e) => {
+                const value = e.target.value;
+                if (!value.startsWith(" ")) {
+                  setNewData({ ...newData, username: value });
+                }
+              }}
+              value={newData.username}
+              required
+            />
+          </div>
+          <div className="user-edit">
+            <label htmlFor="">Nombre</label>
+            <input
+              type="text"
+              onChange={(e) => {
+                const value = e.target.value;
+                if (!value.startsWith(" ")) {
+                  setNewData({ ...newData, name: value });
+                }
+              }}
+              value={newData.name}
+              required
+            />
+          </div>
+          <div className="user-edit">
+            <label htmlFor="">Apellido</label>
+            <input
+              type="text"
+              onChange={(e) => {
+                const value = e.target.value;
+                if (!value.startsWith(" ")) {
+                  setNewData({ ...newData, surname: value });
+                }
+              }}
+              value={newData.surname}
+              required
+            />
+          </div>
 
+          <div className="user-edit">
+            <label htmlFor="">Correo</label>
+
+            <input
+              type="text"
+              onChange={(e) => {
+                const value = e.target.value;
+                if (!value.startsWith(" ")) {
+                  setNewData({ ...newData, email: value });
+                }
+              }}
+              value={newData.email}
+              required
+            />
+          </div>
+
+          <div className="user-edit">
+            <label htmlFor="">Rol</label>
+
+            <select
+              name="role"
+              id="role"
+              value={newData.id_role}
+              onChange={(e) =>
+                setNewData({ ...newData, id_role: e.target.value })
+              }
+            >
+              <option value={1}>ADMIN</option>
+              <option value={2}>JEFE AREA</option>
+              <option value={3}>COLABORADOR</option>
+            </select>
+          </div>
+
+          <div className="user-edit">
+            <label htmlFor="">Area</label>
+
+            <select
+              name="role"
+              id="role"
+              value={newData.id_area}
+              onChange={(e) =>
+                setNewData({ ...newData, id_area: e.target.value })
+              }
+            >
+              {areas != null
+                ? areas.map((area, index) => {
+                    return (
+                      <option key={index} value={area.id_area}>
+                        {area.area_description.toUpperCase()}
+                      </option>
+                    );
+                  })
+                : null}
+            </select>
+          </div>
           <input
             type="button"
             className="user-save-data"
             value="Guardar"
-            onClick={async(e) => {
-              e.preventDefault()
-              const newDataString = JSON.stringify(newData)
-              const req = await fetch(URL + `users/${newDataString}`,{method: 'PUT'})
-              setUserData()
-              setUsers(null)
-
+            onClick={async (e) => {
+              e.preventDefault();
+              try {
+                const newDataString = JSON.stringify(newData);
+                const req = await fetch(URL + `users/${newDataString}`, {
+                  method: "PUT",
+                });
+                alert("Usuario correctamente cambiado");
+                setUserData();
+                setUsers();
+              } catch (err) {
+                console.log(err);
+                alert("Error " + err.message);
+              }
             }}
           />
 
@@ -279,6 +313,7 @@ export function SearchUsers() {
 
   return (
     <div className="all">
+      <input type="text" className="static" placeholder="buscar" />
       <div className="table">
         <div className="title-item">
           <h4>ID</h4>
@@ -303,7 +338,7 @@ export function SearchUsers() {
         </div>
       </div>
       <div className="scroll">
-        {users !== null ? (
+        {users  ? (
           users.map(
             (
               {
@@ -354,7 +389,7 @@ export function SearchUsers() {
         ) : (
           <h1>Cargando...</h1>
         )}
-        {userData && <ShowData />}
+        {userData && <ChangeUser />}
       </div>
     </div>
   );

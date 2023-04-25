@@ -126,12 +126,12 @@ a:hover {
 
   overflow: auto;
 
-  margin-top: 20px;
+  margin-top: 60px;
 }
 
 .table {
   position: absolute;
-  top: 20px;
+  top: 70px;
   left: 108px;
 
   display: flex;
@@ -229,7 +229,6 @@ a:hover {
   align-items: center;
 }
 
-
 /**/
 
 .box{
@@ -242,7 +241,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   width: 50vw;
-  height:60vh;
+  height:79vh;
   background: rgba(255, 255, 255, .8);
 }
 
@@ -267,4 +266,18 @@ input[type='text']{
   height: 5vh;
   background: #2466f7;
   color: white;
+}
+
+.user-edit{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.static{
+  position: absolute;
+  top: 40px;
+  left: 80px;
+  padding: 6px;
 }

@@ -47,4 +47,5 @@ const MenuColaborador = () => {
   );
 };
 
+
 export default MenuColaborador;

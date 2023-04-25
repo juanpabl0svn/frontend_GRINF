@@ -22,12 +22,12 @@ const CreateActivity = () => {
     });
   };
 
-  const [areas, setAreas] = useState(null);
+  const [areas, setAreas] = useState();
 
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState();
 
   useEffect(() => {
-    if (areas == null) {
+    if (!areas) {
       fetch(URL + "areas")
         .then((res) => res.json())
         .then((area) => setAreas(area));
@@ -38,8 +38,7 @@ const CreateActivity = () => {
   const area = JSON.parse(window.sessionStorage.getItem("user"));
 
   useEffect(() => {
-    if (users == null) {
-      console.log(area.id_area);
+    if (!users) {
       fetch(URL + `colab/${area.id_area}`)
         .then((data) => data.json())
         .then((info) => {
@@ -70,10 +69,8 @@ const CreateActivity = () => {
       .join(" ");
     const data = JSON.stringify(activity);
     const req = await fetch(URL + `activity/${data}`, { method: "POST" });
-    const res = await req.json();
-    console.log(res);
 
-    if (res.status === 200) {
+    if (req.ok) {
       alert("actividad creada");
       setWhiteValues();
     } else {
@@ -108,11 +105,10 @@ const CreateActivity = () => {
             value={activity.mandated}
             onChange={(e) => {
               setActivity({ ...activity, mandated: parseInt(e.target.value) });
-              console.log(activity);
             }}
           >
             <option value={0}>Escoger encargado</option>
-            {users != null
+            {users
               ? users.map((user) => {
                   return (
                     <option key={user.id_user} value={user.id_user}>
@@ -168,6 +164,7 @@ const CreateActivity = () => {
             onChange={(e) =>
               setActivity({ ...activity, date_start: e.target.value })
             }
+            required
           />
         </div>
         <div className="data-colab">
@@ -179,6 +176,7 @@ const CreateActivity = () => {
             onChange={(e) =>
               setActivity({ ...activity, date_end: e.target.value })
             }
+            required
           />
         </div>
       </div>
@@ -192,6 +190,8 @@ const CreateActivity = () => {
 export const GetActivities = () => {
   const [activities, setActivities] = useState(null);
 
+  const [activityData, setActivityData] = useState();
+
   useEffect(() => {
     if (!activities) {
       fetch(URL + "activity")
@@ -201,8 +201,150 @@ export const GetActivities = () => {
     return;
   }, [activities]);
 
+  function ChangeActivity() {
+    const [newData, setNewData] = useState({
+      id_activity: activityData[0].id_activity,
+      activity_title: activityData[0].activity_title,
+      activity_mandated: activityData[0].activity_mandated,
+      full_name: activityData[0].full_name,
+      relevance: activityData[0].relevance,
+      activity_description: activityData[0].activity_description,
+      date_end: activityData[0].date_end.split("/").join("-"),
+      id_state: activityData[0].id_state,
+      state_description: activityData[0].state_description,
+    });
+
+    const area = JSON.parse(window.sessionStorage.getItem("user"));
+
+    const [colab, setColab] = useState();
+    useEffect(() => {
+      if (!colab) {
+        fetch(URL + `colab/${area.id_area}`)
+          .then((data) => data.json())
+          .then((info) => {
+            setColab(info);
+          });
+      }
+      return;
+    }, [colab]);
+
+    console.log(newData);
+
+    return (
+      <div className="box">
+        <div className="change-user">
+          <div className="user-edit">
+            <label htmlFor="">Titulo</label>
+            <input
+              type="text"
+              onChange={(e) => {
+                const value = e.target.value;
+                if (!value.startsWith(" ")) {
+                  setNewData({ ...newData, activity_title: value });
+                }
+              }}
+              value={newData.activity_title}
+              required
+            />
+          </div>
+          <div className="user-edit">
+            <label htmlFor="">Encargado</label>
+            <select
+              name="role"
+              id="role"
+              className="text-box"
+              value={newData.activity_mandated}
+              onChange={(e) => {
+                setNewData({
+                  ...newData,
+                  mandated: parseInt(e.target.value),
+                });
+              }}
+            >
+              <option value={0}>Escoger encargado</option>
+              {colab
+                ? colab.map((colab) => {
+                    return (
+                      <option key={colab.id_user} value={colab.id_user}>
+                        {colab.full_name}
+                      </option>
+                    );
+                  })
+                : null}
+            </select>
+          </div>
+          <div className="user-edit">
+            <label htmlFor="">Relevancia</label>
+            <select
+              name="relevance"
+              id="relevance"
+              className="text-box"
+              value={newData.relevance}
+              onChange={(e) =>
+                setNewData({ ...newData, relevance: parseInt(e.target.value) })
+              }
+            >
+              <option value={0}>0</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+              <option value={4}>4</option>
+              <option value={5}>5</option>
+            </select>
+          </div>
+          <div className="user-edit">
+            <label htmlFor="">Descripcion</label>
+            <textarea
+              name=""
+              id=""
+              className="description"
+              value={newData.activity_description}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (!value.startsWith(" ")) {
+                  setNewData({ ...newData, activity_description: value });
+                }
+              }}
+            ></textarea>
+          </div>
+          <div className="user-edit">
+            <label htmlFor="">Fecha fin</label>
+            <input
+              type="date"
+              onChange={(e) => {
+                setNewData({ ...newData, date_end: e.target.value });
+                required;
+              }}
+              value={newData.date_end}
+              required
+            />
+          </div>
+          <div className="user-edit">
+            <label htmlFor="">Estado</label>
+            <select
+              name="relevance"
+              id="relevance"
+              className="text-box"
+              value={newData.id_state}
+              onChange={(e) =>
+                setNewData({ ...newData, id_state: parseInt(e.target.value) })
+              }
+            >
+              <option value={1}>ACTIVO</option>
+              <option value={2}>PENDIENTE</option>
+              <option value={3}>INACTIVO</option>
+            </select>
+          </div>
+          <input type="button" value="Guardar" className="user-save-data" onClick={() => setActivityData()} />
+          <input type="button" value="Salir" className="user-save-data" onClick={() => setActivityData()} />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="all">
+      <input type="text" className="static" placeholder="Buscar" />
       <div className="table">
         <div className="title-item">
           <h4>ID</h4>
@@ -244,7 +386,13 @@ export const GetActivities = () => {
               return (
                 <div className="user-data">
                   <div className="item">
-                    <input type="button" className="select-user" />
+                    <input
+                      type="button"
+                      className="select-user"
+                      onClick={() => {
+                        setActivityData([activities[index], index]);
+                      }}
+                    />
                   </div>
                   <div className="item">
                     <p>{id_activity}</p>
@@ -265,7 +413,7 @@ export const GetActivities = () => {
                     <p>{date_end}</p>
                   </div>
                   <div className="item">
-                    <p>{state_description}</p>
+                    <p>{state_description.toUpperCase()}</p>
                   </div>
                 </div>
               );
@@ -275,6 +423,7 @@ export const GetActivities = () => {
           <h1>Cargando...</h1>
         )}
       </div>
+      {activityData && <ChangeActivity />}
     </div>
   );
 };

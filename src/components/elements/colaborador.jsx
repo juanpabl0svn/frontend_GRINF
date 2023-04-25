@@ -2,44 +2,36 @@ import { useState, useEffect } from "react";
 import { URL } from "../../App";
 
 const AddData = () => {
+  const [activities, setActivities] = useState(null);
 
-  const [activities, setActivities] = useState(null)
-
-  const user = () => JSON.parse(window.sessionStorage.get('user'))
+  const user = () => JSON.parse(window.sessionStorage.get("user"));
 
   const [activity, setActivity] = useState({
     id_user: user.id_user,
-    activity: '',
-    description: '',
-    duration: '',
-    technical_deb:''
-  })
+    activity: "",
+    description: "",
+    duration: "",
+    technical_deb: "",
+  });
 
-
-  useEffect(()=>{
-    if (activities == null){
-      fetch(URL + 'activity')
-      .then(res => res.json())
-      .then(data => setActivities(data))
+  useEffect(() => {
+    if (activities == null) {
+      fetch(URL + "activity")
+        .then((res) => res.json())
+        .then((data) => setActivities(data));
     }
-    return 
-
-  },[])
-
+    return;
+  }, []);
 
   return (
     <form className="all">
       <div className="data-container">
-      <div className="data-colab">
+        <div className="data-colab">
           <label htmlFor="">Encargado</label>
-          <select
-            name="role"
-            id="role"
-            className="text-box"
-          >
+          <select name="role" id="role" className="text-box">
             <option value={0}>Seleccione actividad</option>
             {activities != null
-              ? activities.map(({id_activity,activity_title}) => {
+              ? activities.map(({ id_activity, activity_title }) => {
                   return (
                     <option key={id_activity} value={id_activity}>
                       {activity_title}
@@ -51,13 +43,18 @@ const AddData = () => {
         </div>
         <div className="data-colab">
           <label htmlFor="">Descripcion</label>
-          <textarea name="" id="" className="text-box description" value={activity.description} onChange={(e) => {
-            const value = e.target.value;
-            if (!value.startsWith(' ')){
-              setActivity({...activity, description: value})
-            }
-            
-          }}></textarea>
+          <textarea
+            name=""
+            id=""
+            className="text-box description"
+            value={activity.description}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (!value.startsWith(" ")) {
+                setActivity({ ...activity, description: value });
+              }
+            }}
+          ></textarea>
         </div>
         <div className="data-colab">
           <label htmlFor="">Duracion</label>
