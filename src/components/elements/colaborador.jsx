@@ -4,7 +4,7 @@ import { URL } from "../../App";
 const AddData = () => {
   const [activities, setActivities] = useState(null);
 
-  const user = () => JSON.parse(window.sessionStorage.get("user"));
+  const user = JSON.parse(window.sessionStorage.getItem("user"));
 
   const [activity, setActivity] = useState({
     id_user: user.id_user,
@@ -16,9 +16,13 @@ const AddData = () => {
 
   useEffect(() => {
     if (activities == null) {
-      fetch(URL + "activity")
+      const userString = JSON.stringify(user);
+      fetch(URL + `activity/${userString}`)
         .then((res) => res.json())
-        .then((data) => setActivities(data));
+        .then((data) => {
+          console.log(data)
+          setActivities(data);
+        });
     }
     return;
   }, []);

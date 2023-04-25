@@ -2,23 +2,29 @@ import { useEffect, useState } from "react";
 import { URL } from "../../App";
 
 const CreateActivity = () => {
+
+  const {id_area} = JSON.parse(window.sessionStorage.getItem("user"));
+
+
   const [activity, setActivity] = useState({
     title: "",
-    mandated: "",
+    mandated: 0,
     description: "",
     relevance: 0,
     date_start: "",
     date_end: "",
+    id_area
   });
 
   const setWhiteValues = () => {
     setActivity({
       title: "",
-      mandated: "",
+      mandated: 0,
       description: "",
       relevance: 0,
       date_start: "",
       date_end: "",
+      id_area
     });
   };
 
@@ -67,8 +73,12 @@ const CreateActivity = () => {
         return upper + el.slice(1, el.length);
       })
       .join(" ");
+
     const data = JSON.stringify(activity);
+
     const req = await fetch(URL + `activity/${data}`, { method: "POST" });
+
+    console.log(req)
 
     if (req.ok) {
       alert("actividad creada");
@@ -190,11 +200,15 @@ const CreateActivity = () => {
 export const GetActivities = () => {
   const [activities, setActivities] = useState();
 
+  const {id_area} = JSON.parse(window.sessionStorage.getItem("user"));
+
+
   const [activityData, setActivityData] = useState();
 
   useEffect(() => {
+    console.log(activities)
     if (!activities) {
-      fetch(URL + "activity")
+      fetch(URL + `activity/area/${id_area}`)
         .then((res) => res.json())
         .then((act) => setActivities(act));
     }
@@ -228,7 +242,6 @@ export const GetActivities = () => {
       return;
     }, [colab]);
 
-    console.log(activityData);
 
     return (
       <div className="box">
@@ -339,21 +352,24 @@ export const GetActivities = () => {
             type="button"
             value="Guardar"
             className="user-save-data"
-            onClick={async() => {
+            onClick={async () => {
+              setNewData({
+                ...newData,
+                date_end: newData.date_end.split("-").join("/"),
+              });
 
-              setNewData({...newData, date_end: (newData.date_end).split('-').join('/')})
+              const newDataString = JSON.stringify(newData);
 
-              const newDataString = JSON.stringify(newData)
-
-              const req = await fetch(URL + `activity/${newDataString}`,{method: "PUT"})
-
-              if (req.ok){
-                alert('Actividad Guardada con exito')
-              }else{
-                alert('algo salio mal')
+              const req = await fetch(URL + `activity/${newDataString}`, {
+                method: "PUT",
+              });
+              if (req.ok) {
+                alert("Actividad Guardada con exito");
+                setActivityData();
+                setActivities();
+              } else {
+                alert("Error");
               }
-              setActivityData();
-              setActivities()
             }}
           />
           <input
@@ -394,7 +410,7 @@ export const GetActivities = () => {
         </div>
       </div>
       <div className="scroll">
-        {activities  ? (
+        {activities ? (
           activities.map(
             (
               {
