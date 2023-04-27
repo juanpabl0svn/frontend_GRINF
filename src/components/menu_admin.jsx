@@ -36,6 +36,7 @@ const MenuAdmin = () => {
             <input
               type="button"
               value="Nuevo usuario"
+              className={page==1 ? 'pressed': 'menu-button'}
               onClick={(e) => {
                 e.preventDefault();
                 setPage(1);
@@ -46,6 +47,7 @@ const MenuAdmin = () => {
             <input
               type="button"
               value="Informe"
+              className={page==2 ? 'pressed': 'menu-button'}
               onClick={(e) => {
                 e.preventDefault();
                 setPage(2);
@@ -56,6 +58,7 @@ const MenuAdmin = () => {
             <input
               type="button"
               value="Usuarios"
+              className={page==3 ? 'pressed': 'menu-button'}
               onClick={(e) => {
                 e.preventDefault();
                 setPage(3);

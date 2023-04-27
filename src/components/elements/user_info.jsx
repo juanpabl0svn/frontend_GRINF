@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { URL_WEB } from "../../App";
 
 const User = () => {
-  const {name,area_description} = JSON.parse(window.sessionStorage.getItem("user"));
+  const {name,surname,area_description,role_description} = JSON.parse(window.sessionStorage.getItem("user"));
 
   const [logOut, setLogOut] = useState(false);
 
@@ -15,7 +15,8 @@ const User = () => {
 
   return (
     <div className="user-main">
-      <p>{name}</p>
+      <p>{`${name} ${surname}`}</p>
+      <p>{role_description}</p>
       <p>{area_description}</p>
       <input
         type="button"

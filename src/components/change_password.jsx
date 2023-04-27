@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { URL, URL_WEB } from "../App";
+import showAlert from "../alerts";
 
 export default function ChangePassword() {
   const [data, setData] = useState({
@@ -14,21 +15,33 @@ export default function ChangePassword() {
     const dataString = JSON.stringify(data);
 
     if (data.password === data.new_password) {
-      const req = await fetch(URL + `password/${dataString}`, { method: "PUT" });
-      if (req.status === 200) {
-        alert(
-          `Contraseña correctamente guardada, su nueva contraseña es ${data.password}`
-        );
-        const res = await req.json();
-        const user = JSON.stringify(res);
-        window.sessionStorage.setItem("user", user);
-        window.location.href = `${URL_WEB + res.role_description}`;
+      const req = await fetch(URL + `password/${dataString}`, { method: "POST" });
+      if (req.ok) {
+        showAlert({
+          title:'Contraseña correctamente guardad',
+          text: `Su nueva contraseña es ${data.password}`,
+          icon: 0
+        })
+        setTimeout(async () => {
+          const res = await req.json();
+          const user = JSON.stringify(res);
+          window.sessionStorage.setItem("user", user);
+          window.location.href = `${URL_WEB + res.role_description}`
+        },1800)
       } else {
-        alert("Error !!");
+        showAlert({
+          title: 'Upss!!',
+          text: 'Algo salio mal!',
+          icon: 1
+        })
       }
       return;
     }
-    alert("Contraseñas no coinciden");
+    showAlert({
+          title: 'Upss!!',
+          text: 'Contraseñas no coinciden',
+          icon: 1
+        })
   };
 
   return (
@@ -48,6 +61,7 @@ export default function ChangePassword() {
                 setData({ ...data, username: e.target.value });
                 console.log(data);
               }}
+              required
             />
           </div>
         </div>
@@ -57,7 +71,7 @@ export default function ChangePassword() {
           </label>
           <div className="separator">
             <input
-              type="text"
+              type="password"
               name="password"
               id="password"
               value={data.password}
@@ -66,18 +80,19 @@ export default function ChangePassword() {
           </div>
         </div>
         <div className="data">
-          <label htmlFor="password" id="password-label">
+          <label htmlFor="new_password" id="password-label">
             Repetir contraseña
           </label>
           <div className="separator">
             <input
-              type="text"
+              type="password"
               name="new_password"
               id="new_password"
               value={data.new_password}
               onChange={(e) =>
                 setData({ ...data, new_password: e.target.value })
               }
+              required
             />
           </div>
         </div>
@@ -85,7 +100,7 @@ export default function ChangePassword() {
           <label>
             <a href="/">Volver</a>
           </label>
-          <input type="submit" value="Cambiar" className="log-in-button" />
+          <input type="submit" value="Cambiar" className="log-in-button button" />
         </div>
       </form>
     </div>

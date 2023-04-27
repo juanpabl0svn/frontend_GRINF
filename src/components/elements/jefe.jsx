@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { URL } from "../../App";
+import showAlert from "../../alerts";
 
 const CreateActivity = () => {
-
-  const {id_area} = JSON.parse(window.sessionStorage.getItem("user"));
-
+  const { id_area } = JSON.parse(window.sessionStorage.getItem("user"));
 
   const [activity, setActivity] = useState({
     title: "",
@@ -13,7 +12,7 @@ const CreateActivity = () => {
     relevance: 0,
     date_start: "",
     date_end: "",
-    id_area
+    id_area,
   });
 
   const setWhiteValues = () => {
@@ -24,7 +23,7 @@ const CreateActivity = () => {
       relevance: 0,
       date_start: "",
       date_end: "",
-      id_area
+      id_area,
     });
   };
 
@@ -57,35 +56,43 @@ const CreateActivity = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (activity.mandated === 0) {
-      alert("Ingrese encargado");
-      return;
+    if (activity.mandated != 0 && activity.relevance != 0) {
+      activity.title = activity.title
+        .toLowerCase()
+        .split(" ")
+        .map((el) => {
+          const upper = el[0].toUpperCase();
+          return upper + el.slice(1, el.length);
+        })
+        .join(" ");
+
+      const data = JSON.stringify(activity);
+
+      const req = await fetch(URL + `activity/${data}`, { method: "POST" });
+
+      console.log(req);
+
+      if (req.ok) {
+        showAlert({
+          title: 'Actividad creada',
+          text: 'Ahora esta disponible para el ingreso de datos',
+          icon: 0
+        })
+        setWhiteValues();
+      } else {
+        showAlert({
+          title: 'Ups!!!',
+          text: 'Algo salio mal al crear la actividad',
+          icon: 1
+        })
+      }
+      return 
     }
-    if (activity.relevance === 0) {
-      alert("Ingrese relevancia");
-      return;
-    }
-    activity.title = activity.title
-      .toLowerCase()
-      .split(" ")
-      .map((el) => {
-        const upper = el[0].toUpperCase();
-        return upper + el.slice(1, el.length);
-      })
-      .join(" ");
-
-    const data = JSON.stringify(activity);
-
-    const req = await fetch(URL + `activity/${data}`, { method: "POST" });
-
-    console.log(req)
-
-    if (req.ok) {
-      alert("actividad creada");
-      setWhiteValues();
-    } else {
-      alert("Error!! ");
-    }
+    showAlert({
+      title: 'Diligencie todo el formulario',
+      text: 'Hay campos vacios o sin valor en el formulario',
+      icon: 2
+    })
   };
 
   return (
@@ -191,7 +198,7 @@ const CreateActivity = () => {
         </div>
       </div>
       <div className="send">
-        <input type="submit" value="Enviar" />
+        <input type="submit" className="log-in-button button" value="Enviar" />
       </div>
     </form>
   );
@@ -200,13 +207,12 @@ const CreateActivity = () => {
 export const GetActivities = () => {
   const [activities, setActivities] = useState();
 
-  const {id_area} = JSON.parse(window.sessionStorage.getItem("user"));
-
+  const { id_area } = JSON.parse(window.sessionStorage.getItem("user"));
 
   const [activityData, setActivityData] = useState();
 
   useEffect(() => {
-    console.log(activities)
+    console.log(activities);
     if (!activities) {
       fetch(URL + `activity/area/${id_area}`)
         .then((res) => res.json())
@@ -241,7 +247,6 @@ export const GetActivities = () => {
       }
       return;
     }, [colab]);
-
 
     return (
       <div className="box">
@@ -297,7 +302,7 @@ export const GetActivities = () => {
                 setNewData({ ...newData, relevance: parseInt(e.target.value) })
               }
             >
-              <option value={0}>0</option>
+              <option value={0}>Ingrese la relevancia</option>
               <option value={1}>1</option>
               <option value={2}>2</option>
               <option value={3}>3</option>
@@ -351,7 +356,7 @@ export const GetActivities = () => {
           <input
             type="button"
             value="Guardar"
-            className="user-save-data"
+            className="user-save-data button"
             onClick={async () => {
               setNewData({
                 ...newData,
@@ -364,18 +369,26 @@ export const GetActivities = () => {
                 method: "PUT",
               });
               if (req.ok) {
-                alert("Actividad Guardada con exito");
+                showAlert({
+                  title: 'Actividad modificada con exito',
+                  text: 'Ahora sus cambios se pueden evidenciar',
+                  icon: 0
+                })
                 setActivityData();
                 setActivities();
               } else {
-                alert("Error");
+                showAlert({
+                  title: 'Ups!!!',
+                  text: 'Algo salio mal al modificar la actividad',
+                  icon: 1
+                })
               }
             }}
           />
           <input
             type="button"
             value="Salir"
-            className="user-save-data"
+            className="user-save-data button"
             onClick={() => setActivityData()}
           />
         </div>

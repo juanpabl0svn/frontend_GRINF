@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import "./index.css";
+import showAlert from "./alerts";
+
+
 
 export const URL = "http://localhost:3000/";
 
@@ -14,7 +17,7 @@ function App() {
     window.sessionStorage.setItem("user", data);
   };
 
-  const submit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await fetch(URL + `users/${JSON.stringify(user)}`);
@@ -24,7 +27,11 @@ function App() {
         window.location.href = URL_WEB + data.role_description;
       }
     } catch (err) {
-      alert("Usuario o contraseña incorrectos");
+      showAlert({
+        title: 'Usuario o contraseña incorrectos',
+        text: 'Intente de nuevo o pida su registro en administration@GRINF.com',
+        icon: 1
+      })
     }
   };
 
@@ -37,7 +44,7 @@ function App() {
 
   return (
     <div className="card">
-      <form className="form" onSubmit={submit}>
+      <form className="form" onSubmit={handleSubmit}>
         <div className="data">
           <label htmlFor="username" id="username-label">
             Usuario
@@ -51,6 +58,7 @@ function App() {
               onChange={(e) => {
                 setUser({ ...user, username: e.target.value });
               }}
+              required
             />
           </div>
         </div>
@@ -60,19 +68,20 @@ function App() {
           </label>
           <div className="separator">
             <input
-              type="text"
+              type="password"
               name="password"
               id="password"
               value={user.password}
               onChange={(e) => {
                 setUser({ ...user, password: e.target.value });
               }}
+              required
             />
           </div>
         </div>
         <div className="actions">
           <a href="/clave">¿Olvidaste tu contraseña?</a>
-          <input type="submit" className="log-in-button" value="Ingresar" />
+          <input type="submit" className="log-in-button button" value="Ingresar" />
         </div>
       </form>
     </div>

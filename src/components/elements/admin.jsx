@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { URL } from "../../App";
+import showAlert from "../../alerts";
 
 export default function NewUser() {
   const [data, setData] = useState({
@@ -26,14 +27,26 @@ export default function NewUser() {
       const newUser = JSON.stringify(data);
       const req = await fetch(URL + `users/${newUser}`, { method: "POST" });
       if (req.ok) {
-        alert("usuario creado");
+        showAlert({
+          title: 'Usuario creado',
+          text: 'Ahora el usuario puede acceder al software',
+          icon: 0
+        })
         putWhiteValues();
       } else {
-        alert("Error la crear usuario");
+        showAlert({
+          title: 'Ups!!!',
+          text: 'Algo salio mal',
+          icon: 1
+        })
       }
       return;
     }
-    alert("Diligencie todo el formulario");
+    showAlert({
+      title: 'Diligencie todo el formulario',
+      text: 'Hay campos vacios o sin valor',
+      icon: 2
+    })
   };
 
   const [areas, setAreas] = useState(null);
@@ -126,7 +139,7 @@ export default function NewUser() {
               : null}
           </select>
         </div>
-        <input type="submit" className="log-in-button" value="Crear" />
+        <input type="submit" className="log-in-button button" value="Crear" />
       </form>
     </div>
   );
@@ -281,7 +294,7 @@ export function SearchUsers() {
           </div>
           <input
             type="button"
-            className="user-save-data"
+            className="user-save-data button"
             value="Guardar"
             onClick={async (e) => {
               e.preventDefault();
@@ -290,19 +303,26 @@ export function SearchUsers() {
                 const req = await fetch(URL + `users/${newDataString}`, {
                   method: "PUT",
                 });
-                alert("Usuario correctamente cambiado");
+                showAlert({
+                  title: 'Usuario modificado con exito',
+                  text: 'Los cambios ahora se ven reflejados en el usuario',
+                  icon:0
+                })
                 setUserData();
                 setUsers();
               } catch (err) {
-                console.log(err);
-                alert("Error " + err.message);
+                showAlert({
+                  title:'Ups!!!',
+                  text: `El usuario no se pudo modificar por que ${err}`,
+                  icon: 1
+                })
               }
             }}
           />
 
           <input
             type="button"
-            className="user-save-data"
+            className="user-save-data button"
             value="Salir"
             onClick={() => setUserData()}
           />
