@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { URL } from "../../App";
+import showAlert from "../../alerts";
 
 const AddData = () => {
   const [activities, setActivities] = useState(null);

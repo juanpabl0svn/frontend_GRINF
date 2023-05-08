@@ -20,6 +20,7 @@ const User = () => {
       <p>{area_description}</p>
       <input
         type="button"
+        className="log-in-button button exit"
         value="Salir"
         onClick={() => {
           setLogOut(true);

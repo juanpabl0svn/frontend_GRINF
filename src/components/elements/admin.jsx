@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { URL } from "../../App";
 import showAlert from "../../alerts";
+import debounce from "just-debounce-it";
 
 export default function NewUser() {
   const [data, setData] = useState({
@@ -28,25 +29,25 @@ export default function NewUser() {
       const req = await fetch(URL + `users/${newUser}`, { method: "POST" });
       if (req.ok) {
         showAlert({
-          title: 'Usuario creado',
-          text: 'Ahora el usuario puede acceder al software',
-          icon: 0
-        })
+          title: "Usuario creado",
+          text: "Ahora el usuario puede acceder al software",
+          icon: 0,
+        });
         putWhiteValues();
       } else {
         showAlert({
-          title: 'Ups!!!',
-          text: 'Algo salio mal',
-          icon: 1
-        })
+          title: "Ups!!!",
+          text: "Algo salio mal",
+          icon: 1,
+        });
       }
       return;
     }
     showAlert({
-      title: 'Diligencie todo el formulario',
-      text: 'Hay campos vacios o sin valor',
-      icon: 2
-    })
+      title: "Diligencie todo el formulario",
+      text: "Hay campos vacios o sin valor",
+      icon: 2,
+    });
   };
 
   const [areas, setAreas] = useState(null);
@@ -158,14 +159,22 @@ export function SearchUsers() {
 
   const [userData, setUserData] = useState();
 
+  const [filter, setFilter] = useState('');
+
+  const lastCall = useRef('')
+
   useEffect(() => {
-    if (users == null) {
-      fetch(URL + "users")
-        .then((data) => data.json())
-        .then((info) => setUsers(info));
+    if (!users || filter != '' && filter != lastCall.current){
+      handleSearch();
+      lastCall.current = filter
+      console.log(lastCall.current)
+      return 
     }
-    return;
-  }, [users]);
+    if (filter == ''){
+      handleSearch();
+      return 
+    }
+  }, [users,filter]);
 
   function ChangeUser() {
     const [areas, setAreas] = useState(null);
@@ -304,18 +313,18 @@ export function SearchUsers() {
                   method: "PUT",
                 });
                 showAlert({
-                  title: 'Usuario modificado con exito',
-                  text: 'Los cambios ahora se ven reflejados en el usuario',
-                  icon:0
-                })
+                  title: "Usuario modificado con exito",
+                  text: "Los cambios ahora se ven reflejados en el usuario",
+                  icon: 0,
+                });
                 setUserData();
                 setUsers();
               } catch (err) {
                 showAlert({
-                  title:'Ups!!!',
+                  title: "Ups!!!",
                   text: `El usuario no se pudo modificar por que ${err}`,
-                  icon: 1
-                })
+                  icon: 1,
+                });
               }
             }}
           />
@@ -331,9 +340,25 @@ export function SearchUsers() {
     );
   }
 
+  const handleSearch = useCallback(
+    debounce(() => {
+      fetch(URL + `users${filter != '' ? `/filter/${filter}` : ""}`)
+        .then((data) => data.json())
+        .then((info) => setUsers(info));
+
+    }, 600),[filter]
+  );
+
   return (
     <div className="all">
-      <input type="text" className="static" placeholder="buscar" />
+      <input
+        type="text"
+        className="static"
+        placeholder="buscar"
+        value={filter}
+        onChange={(e) => {
+          setFilter(e.target.value)}}
+      />
       <div className="table">
         <div className="title-item">
           <h4>ID</h4>
@@ -358,7 +383,7 @@ export function SearchUsers() {
         </div>
       </div>
       <div className="scroll">
-        {users  ? (
+        {users ? (
           users.map(
             (
               {
@@ -373,7 +398,7 @@ export function SearchUsers() {
               index
             ) => {
               return (
-                <div className="user-data">
+                <div className="user-data" key={index}>
                   <div className="item">
                     <input
                       type="button"
