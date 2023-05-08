@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { URL } from "../../App";
 import showAlert from "../../alerts";
+import debounce from "just-debounce-it";
 
 const CreateActivity = () => {
   const { id_area } = JSON.parse(window.sessionStorage.getItem("user"));
@@ -74,25 +75,25 @@ const CreateActivity = () => {
 
       if (req.ok) {
         showAlert({
-          title: 'Actividad creada',
-          text: 'Ahora esta disponible para el ingreso de datos',
-          icon: 0
-        })
+          title: "Actividad creada",
+          text: "Ahora esta disponible para el ingreso de datos",
+          icon: 0,
+        });
         setWhiteValues();
       } else {
         showAlert({
-          title: 'Ups!!!',
-          text: 'Algo salio mal al crear la actividad',
-          icon: 1
-        })
+          title: "Ups!!!",
+          text: "Algo salio mal al crear la actividad",
+          icon: 1,
+        });
       }
-      return 
+      return;
     }
     showAlert({
-      title: 'Diligencie todo el formulario',
-      text: 'Hay campos vacios o sin valor en el formulario',
-      icon: 2
-    })
+      title: "Diligencie todo el formulario",
+      text: "Hay campos vacios o sin valor en el formulario",
+      icon: 2,
+    });
   };
 
   return (
@@ -207,19 +208,46 @@ const CreateActivity = () => {
 export const GetActivities = () => {
   const [activities, setActivities] = useState();
 
+  const [filter, setFilter] = useState("");
+
   const { id_area } = JSON.parse(window.sessionStorage.getItem("user"));
 
   const [activityData, setActivityData] = useState();
 
+  const data = {
+    id_area: id_area,
+    filter: filter,
+  };
+  const lastCall = useRef("");
+
+  const handleSearchArea = useCallback(
+    debounce(() => {
+      const new_data = JSON.stringify(data);
+      console.log(new_data);
+      fetch(
+        URL +
+          `activity/area${filter != "" ? `/filter/${new_data}` : `/${id_area}`}`
+      )
+        .then((data) => data.json())
+        .then((info) => setActivities(info));
+      return;
+    }, 100),
+    [filter]
+  );
+
   useEffect(() => {
-    console.log(activities);
-    if (!activities) {
-      fetch(URL + `activity/area/${id_area}`)
-        .then((res) => res.json())
-        .then((act) => setActivities(act));
+    if (!activities || (filter != "" && filter != lastCall.current)) {
+      handleSearchArea();
+      lastCall.current = filter;
+      return;
+    }
+    if (filter == "" && lastCall.current != filter) {
+      handleSearchArea();
+      lastCall.current = filter;
+      return;
     }
     return;
-  }, [activities]);
+  }, [activities, filter]);
 
   function ChangeActivity() {
     const [newData, setNewData] = useState({
@@ -370,18 +398,18 @@ export const GetActivities = () => {
               });
               if (req.ok) {
                 showAlert({
-                  title: 'Actividad modificada con exito',
-                  text: 'Ahora sus cambios se pueden evidenciar',
-                  icon: 0
-                })
+                  title: "Actividad modificada con exito",
+                  text: "Ahora sus cambios se pueden evidenciar",
+                  icon: 0,
+                });
                 setActivityData();
                 setActivities();
               } else {
                 showAlert({
-                  title: 'Ups!!!',
-                  text: 'Algo salio mal al modificar la actividad',
-                  icon: 1
-                })
+                  title: "Ups!!!",
+                  text: "Algo salio mal al modificar la actividad",
+                  icon: 1,
+                });
               }
             }}
           />
@@ -398,7 +426,13 @@ export const GetActivities = () => {
 
   return (
     <div className="all">
-      <input type="text" className="static" placeholder="Buscar" />
+      <input
+        type="text"
+        className="static"
+        placeholder="Buscar"
+        value={filter}
+        onChange={(e) => setFilter(e.target.value)}
+      />
       <div className="table">
         <div className="title-item">
           <h4>ID</h4>
@@ -438,7 +472,7 @@ export const GetActivities = () => {
               index
             ) => {
               return (
-                <div className="user-data">
+                <div className="user-data" key={index}>
                   <div className="item">
                     <input
                       type="button"
@@ -472,12 +506,15 @@ export const GetActivities = () => {
                 </div>
               );
             }
-          ) || <h1>Sin registros...</h1>
+          )
         ) : (
-          <h1>Cargando...</h1>
+          <h1 className="center-text">Cargando...</h1>
         )}
+        {Array.isArray(activities) && activities.length === 0 && (
+          <h1 className="center-text">Sin registros</h1>
+        )}
+        {activityData && <ChangeActivity />}
       </div>
-      {activityData && <ChangeActivity />}
     </div>
   );
 };

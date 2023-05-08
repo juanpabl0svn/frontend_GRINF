@@ -149,7 +149,11 @@ export default function NewUser() {
 export function CreateInf() {
   return (
     <div className="all">
-      <input type="button" value="Generar informe" />
+      <input
+        type="button"
+        value="Generar informe"
+        className="log-in-button button generated"
+      />
     </div>
   );
 }
@@ -159,25 +163,37 @@ export function SearchUsers() {
 
   const [userData, setUserData] = useState();
 
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
 
-  const lastCall = useRef('')
+  const lastCall = useRef("");
 
   useEffect(() => {
-    if (!users || filter != '' && filter != lastCall.current){
+    if (!users || (filter != "" && filter != lastCall.current)) {
       handleSearch();
-      lastCall.current = filter
-      console.log(lastCall.current)
-      return 
+      lastCall.current = filter;
+      console.log(lastCall.current);
+      return;
     }
-    if (filter == ''){
+    if (filter == "" && lastCall.current != filter) {
       handleSearch();
-      return 
+      lastCall.current = filter;
+      return;
     }
-  }, [users,filter]);
+    return;
+  }, [users, filter]);
+
+  const handleSearch = useCallback(
+    debounce(() => {
+      fetch(URL + `users${filter != "" ? `/filter/${filter}` : ""}`)
+        .then((data) => data.json())
+        .then((info) => setUsers(info));
+      return;
+    }, 100),
+    [filter]
+  );
 
   function ChangeUser() {
-    const [areas, setAreas] = useState(null);
+    const [areas, setAreas] = useState();
 
     const [newData, setNewData] = useState({
       username: userData[0].username,
@@ -290,7 +306,7 @@ export function SearchUsers() {
                 setNewData({ ...newData, id_area: e.target.value })
               }
             >
-              {areas != null
+              {areas
                 ? areas.map((area, index) => {
                     return (
                       <option key={index} value={area.id_area}>
@@ -340,14 +356,7 @@ export function SearchUsers() {
     );
   }
 
-  const handleSearch = useCallback(
-    debounce(() => {
-      fetch(URL + `users${filter != '' ? `/filter/${filter}` : ""}`)
-        .then((data) => data.json())
-        .then((info) => setUsers(info));
-
-    }, 600),[filter]
-  );
+  console.log("ayuda");
 
   return (
     <div className="all">
@@ -357,7 +366,9 @@ export function SearchUsers() {
         placeholder="buscar"
         value={filter}
         onChange={(e) => {
-          setFilter(e.target.value)}}
+          e.preventDefault();
+          setFilter(e.target.value);
+        }}
       />
       <div className="table">
         <div className="title-item">
@@ -430,10 +441,13 @@ export function SearchUsers() {
                 </div>
               );
             }
-          ) || <h1>Sin registros...</h1>
+          )
         ) : (
-          <h1>Cargando...</h1>
+          <h1 className="center-text">Cargando...</h1>
         )}
+        {Array.isArray(users) && users.length === 0 ? (
+          <h1 className="center-text">Sin registros</h1>
+        ) : null}
         {userData && <ChangeUser />}
       </div>
     </div>

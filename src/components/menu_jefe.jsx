@@ -36,7 +36,7 @@ const MenuJefe = () => {
             <input
               type="button"
               value="Crear actividad"
-              className={page==1 ? 'pressed': 'menu-button'}
+              className={page == 1 ? "pressed" : "menu-button"}
               onClick={(e) => {
                 e.preventDefault();
                 setPage(1);
@@ -47,21 +47,10 @@ const MenuJefe = () => {
             <input
               type="button"
               value="Ver actividades"
-              className={page==2 ? 'pressed': 'menu-button'}
+              className={page == 2 ? "pressed" : "menu-button"}
               onClick={(e) => {
                 e.preventDefault();
                 setPage(2);
-              }}
-            />
-          </a>
-          <a href="">
-            <input
-              type="button"
-              value="Usuarios"
-              className={page==3 ? 'pressed': 'menu-button'}
-              onClick={(e) => {
-                e.preventDefault();
-                setPage(3);
               }}
             />
           </a>

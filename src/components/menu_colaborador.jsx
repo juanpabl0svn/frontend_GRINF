@@ -34,10 +34,21 @@ const MenuColaborador = () => {
             <input
               type="button"
               value="Agregar datos"
-              className={page==1 ? 'pressed': 'menu-button'}
+              className={page == 1 ? "pressed" : "menu-button"}
               onClick={(e) => {
                 e.preventDefault();
                 setPage(1);
+              }}
+            />
+          </a>
+          <a href="">
+            <input
+              type="button"
+              value="Agregar datos"
+              className={page == 2 ? "pressed" : "menu-button"}
+              onClick={(e) => {
+                e.preventDefault();
+                setPage(2);
               }}
             />
           </a>
@@ -47,6 +58,5 @@ const MenuColaborador = () => {
     </div>
   );
 };
-
 
 export default MenuColaborador;

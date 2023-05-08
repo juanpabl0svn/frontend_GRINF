@@ -10,7 +10,6 @@ html::-webkit-scrollbar {
   -webkit-appearance: none;
 }
 
-
 .card {
   position: absolute;
   top: 50%;
@@ -61,7 +60,7 @@ html::-webkit-scrollbar {
   margin-left: 15px;
 }
 
-.log-in-button{
+.log-in-button {
   margin-top: 20px;
   border: none;
   background-color: white;
@@ -140,12 +139,13 @@ a:hover {
 }
 
 .scroll::-webkit-scrollbar:vertical {
-  width:10px;
+  width: 10px;
 }
 
-.scroll::-webkit-scrollbar-button:increment,.scroll::-webkit-scrollbar-button {
+.scroll::-webkit-scrollbar-button:increment,
+.scroll::-webkit-scrollbar-button {
   display: none;
-} 
+}
 
 .scroll::-webkit-scrollbar:horizontal {
   height: 10px;
@@ -158,7 +158,7 @@ a:hover {
 }
 
 .scroll::-webkit-scrollbar-track {
-  border-radius: 10px;  
+  border-radius: 10px;
 }
 
 .table {
@@ -185,7 +185,6 @@ a:hover {
   bottom: 20px;
 }
 
-
 /**/
 .user-main {
   position: absolute;
@@ -200,11 +199,11 @@ a:hover {
   box-shadow: 5px 5px rgba(94, 92, 92, 0.5);
 }
 
-.user-main p{
+.user-main p {
   margin: 8px;
 }
 
-.user-main input[type='button']{
+.user-main input[type="button"] {
   margin: 8px 0;
 }
 
@@ -217,8 +216,6 @@ a:hover {
   border-radius: 20px;
   margin-left: 50px;
 }
-
-
 
 .item {
   display: flex;
@@ -272,7 +269,7 @@ a:hover {
 
 /**/
 
-.box{
+.box {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -282,24 +279,23 @@ a:hover {
   align-items: center;
   justify-content: center;
   width: 50vw;
-  height:79vh;
-  background: rgba(255, 255, 255, .8);
+  height: 79vh;
+  background: rgba(255, 255, 255, 0.8);
 }
 
-.change-user{
+.change-user {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content:center;
-  gap:20px;
+  justify-content: center;
+  gap: 20px;
 }
 
-input[type='text']{
+input[type="text"] {
   text-transform: lowercase;
-
 }
 
-.user-save-data{
+.user-save-data {
   border: none;
   background-color: white;
   border-radius: 10px;
@@ -309,33 +305,32 @@ input[type='text']{
   color: white;
 }
 
-.user-edit{
+.user-edit {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-
-.static{
+.static {
   position: absolute;
   top: 30px;
   right: 450px;
   padding: 8px;
 }
 
-input[type='button']{
+input[type="button"] {
   cursor: pointer;
 }
 
-select{
-  cursor: pointer
+select {
+  cursor: pointer;
 }
 
 .button {
   display: inline-block;
   padding: 10px 25px;
   cursor: pointer;
-  text-align: center;	
+  text-align: center;
   text-decoration: none;
   outline: none;
   color: #fff;
@@ -344,7 +339,9 @@ select{
   box-shadow: 0 9px #999;
 }
 
-.button:hover {background-color: #274585;}
+.button:hover {
+  background-color: #274585;
+}
 
 .button:active {
   background-color: #2466f7;
@@ -352,15 +349,14 @@ select{
   transform: translateY(4px);
 }
 
-
 .select-user {
   height: 20px;
   width: 20px;
   border-radius: 50%;
   cursor: pointer;
-  border: 1px solid ;
+  border: 1px solid;
   cursor: pointer;
-  text-align: center;	
+  text-align: center;
   text-decoration: none;
   outline: none;
   color: #fff;
@@ -368,32 +364,29 @@ select{
   box-shadow: 0 5px #999;
 }
 
-
-
-.select-user:hover {background-color: #274585;}
+.select-user:hover {
+  background-color: #274585;
+}
 
 .select-user:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
 
-
-.menu-button{
+.menu-button {
   border: 2px solid black;
   background-color: white;
   color: black;
   padding: 14px 28px;
   border-color: #e7e7e7;
-
 }
 
-.menu-button:hover{
+.menu-button:hover {
   background: #0f66c9;
   color: white;
 }
 
-
-.pressed{
+.pressed {
   border: 2px solid black;
   background-color: white;
   color: black;
@@ -403,13 +396,21 @@ select{
   color: white;
 }
 
-.exit{
+.exit {
   width: 5vw;
 }
 
+.center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
-
-
-
-
-
+.generated {
+  width: 11vw;
+  padding-right: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
