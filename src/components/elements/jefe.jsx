@@ -48,7 +48,6 @@ const CreateActivity = () => {
       fetch(URL + `colab/${area.id_area}`)
         .then((data) => data.json())
         .then((info) => {
-          console.log(info);
           setUsers(info);
         });
     }
@@ -70,8 +69,6 @@ const CreateActivity = () => {
       const data = JSON.stringify(activity);
 
       const req = await fetch(URL + `activity/${data}`, { method: "POST" });
-
-      console.log(req);
 
       if (req.ok) {
         showAlert({
@@ -223,7 +220,6 @@ export const GetActivities = () => {
   const handleSearchArea = useCallback(
     debounce(() => {
       const new_data = JSON.stringify(data);
-      console.log(new_data);
       fetch(
         URL +
           `activity/area${filter != "" ? `/filter/${new_data}` : `/${id_area}`}`
@@ -231,7 +227,7 @@ export const GetActivities = () => {
         .then((data) => data.json())
         .then((info) => setActivities(info));
       return;
-    }, 100),
+    }, 1),
     [filter]
   );
 
@@ -501,7 +497,7 @@ export const GetActivities = () => {
                     <p>{date_end}</p>
                   </div>
                   <div className="item">
-                    <p>{state_description.toUpperCase()}</p>
+                    <p>{state_description}</p>
                   </div>
                 </div>
               );

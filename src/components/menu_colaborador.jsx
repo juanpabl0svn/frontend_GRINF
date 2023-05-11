@@ -41,17 +41,6 @@ const MenuColaborador = () => {
               }}
             />
           </a>
-          <a href="">
-            <input
-              type="button"
-              value="Agregar datos"
-              className={page == 2 ? "pressed" : "menu-button"}
-              onClick={(e) => {
-                e.preventDefault();
-                setPage(2);
-              }}
-            />
-          </a>
         </nav>
       </header>
       <div className="all">{pages[page] || <h1>Error</h1>}</div>

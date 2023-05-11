@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { URL } from "../../App";
 import showAlert from "../../alerts";
 import debounce from "just-debounce-it";
+import LinesChart from "./line";
 
 export default function NewUser() {
   const [data, setData] = useState({
@@ -73,8 +74,10 @@ export default function NewUser() {
             required
             value={data.name}
             onChange={(e) => {
-              setData({ ...data, name: e.target.value });
-              console.log(data);
+              const value = e.target.value;
+              if (!value.startsWith(" ")) {
+                setData({ ...data, name: e.target.value });
+              }
             }}
           />
         </div>
@@ -87,7 +90,10 @@ export default function NewUser() {
             required
             value={data.surname}
             onChange={(e) => {
-              setData({ ...data, surname: e.target.value });
+              const value = e.target.value;
+              if (!value.startsWith(" ")) {
+                setData({ ...data, surname: value });
+              }
             }}
           />
         </div>
@@ -100,7 +106,10 @@ export default function NewUser() {
             required
             value={data.email}
             onChange={(e) => {
-              setData({ ...data, email: e.target.value });
+              const value = e.target.value;
+              if (!value.startsWith(" ")) {
+                setData({ ...data, email: value });
+              }
             }}
           />
         </div>
@@ -111,12 +120,14 @@ export default function NewUser() {
             id="role"
             className="form-user"
             value={data.role}
-            onChange={(e) => setData({ ...data, role: e.target.value })}
+            onChange={(e) => {
+              setData({ ...data, role: e.target.value });
+            }}
           >
             <option value={0}>Seleccione un rol</option>
-            <option value={1}>ADMIN</option>
-            <option value={2}>JEFE AREA</option>
-            <option value={3}>COLABORADOR</option>
+            <option value={1}>Admin</option>
+            <option value={2}>Jefe Area</option>
+            <option value={3}>Colaborador</option>
           </select>
         </div>
         <div className="info">
@@ -128,12 +139,12 @@ export default function NewUser() {
             value={data.area}
             onChange={(e) => setData({ ...data, area: e.target.value })}
           >
-            <option value={0}>Seleccione una área</option>
+            <option value={0}>Seleccione una area</option>
             {areas != null
               ? areas.map((area, index) => {
                   return (
                     <option key={index} value={area.id_area}>
-                      {area.area_description.toUpperCase()}
+                      {area.area_description}
                     </option>
                   );
                 })
@@ -147,13 +158,54 @@ export default function NewUser() {
 }
 
 export function CreateInf() {
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    if (!data) {
+      fetch(URL + "data")
+        .then((res) => res.json())
+        .then((data) => setData(data));
+    }
+  }, []);
+
   return (
     <div className="all">
+      {data && (
+        <div className="order">
+          <div className="graph">
+            <LinesChart
+              dataStatistic={data.map((e) => e.time_worked)}
+              length={data.length}
+              label={"Tiempo trabajado"}
+              color={0}
+            />
+          </div>
+          <div className="graph">
+            <LinesChart
+              dataStatistic={data.map((e) => e.paid_time)}
+              length={data.length}
+              label={"Tiempo pagado"}
+              color={1}
+            />
+          </div>
+          <div className="graph">
+            <LinesChart
+              dataStatistic={data.map((e) => e.unpaid_time)}
+              length={data.length}
+              label={"Tiempo no pagado"}
+              color={2}
+            />
+          </div>
+        </div>
+      )}
+
       <input
         type="button"
         value="Generar informe"
         className="log-in-button button generated"
       />
+
+      {/* {data && handleGraphics} */}
     </div>
   );
 }
@@ -171,7 +223,6 @@ export function SearchUsers() {
     if (!users || (filter != "" && filter != lastCall.current)) {
       handleSearch();
       lastCall.current = filter;
-      console.log(lastCall.current);
       return;
     }
     if (filter == "" && lastCall.current != filter) {
@@ -188,7 +239,7 @@ export function SearchUsers() {
         .then((data) => data.json())
         .then((info) => setUsers(info));
       return;
-    }, 100),
+    }, 1),
     [filter]
   );
 
@@ -355,8 +406,6 @@ export function SearchUsers() {
       </div>
     );
   }
-
-  console.log("ayuda");
 
   return (
     <div className="all">
