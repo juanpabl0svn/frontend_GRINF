@@ -199,13 +199,13 @@ export function CreateInf() {
         </div>
       )}
 
-      <input
-        type="button"
-        value="Generar informe"
-        className="log-in-button button generated"
-      />
-
-      {/* {data && handleGraphics} */}
+      <a href="http://localhost:3000/inf">
+        <input
+          type="button"
+          value="Generar informe"
+          className="log-in-button button generated"
+        />
+      </a>
     </div>
   );
 }

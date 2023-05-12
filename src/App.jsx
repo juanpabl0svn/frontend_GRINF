@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import "./index.css";
 import showAlert from "./alerts";
 
-
-
 export const URL = "http://localhost:3000/";
 
 export const URL_WEB = "http://localhost:5173/";
@@ -28,10 +26,10 @@ function App() {
       }
     } catch (err) {
       showAlert({
-        title: 'Usuario o contraseña incorrectos',
-        text: 'Intente de nuevo o pida su registro en administration@GRINF.com',
-        icon: 1
-      })
+        title: "Usuario o contraseña incorrectos",
+        text: "Intente de nuevo o pida su registro en administration@GRINF.com",
+        icon: 1,
+      });
     }
   };
 
@@ -81,7 +79,11 @@ function App() {
         </div>
         <div className="actions">
           <a href="/clave">¿Olvidaste tu contraseña?</a>
-          <input type="submit" className="log-in-button button" value="Ingresar" />
+          <input
+            type="submit"
+            className="log-in-button button"
+            value="Ingresar"
+          />
         </div>
       </form>
     </div>

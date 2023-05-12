@@ -59,7 +59,6 @@ export default function ChangePassword() {
               value={data.username}
               onChange={(e) => {
                 setData({ ...data, username: e.target.value });
-                console.log(data);
               }}
               required
             />

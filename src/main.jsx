@@ -5,6 +5,7 @@ import MenuAdmin from "./components/menu_admin";
 import MenuJefe from "./components/menu_jefe";
 import MenuColaborador from "./components/menu_colaborador";
 import ChangePassword from "./components/change_password";
+import Error404 from "./components/not_found";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -14,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/jefe" element={<MenuJefe />} />
       <Route path="/colaborador" element={<MenuColaborador />} />
       <Route path="/clave" element={<ChangePassword />} />
-      <Route path="*" element={<h1>Error</h1>} />
+      <Route path="*" element={<Error404 />} />
     </Routes>
   </BrowserRouter>
 );
