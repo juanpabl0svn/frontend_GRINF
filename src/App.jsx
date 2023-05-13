@@ -42,6 +42,9 @@ function App() {
 
   return (
     <div className="card">
+      <div className="image">
+        <img src="../images/Logo.png" alt="" />
+      </div>
       <form className="form" onSubmit={handleSubmit}>
         <div className="data">
           <label htmlFor="username" id="username-label">

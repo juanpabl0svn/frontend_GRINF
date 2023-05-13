@@ -3,7 +3,7 @@ const Error404 = () => {
     <>
       <h1 className="title-error">ERROR 404</h1>
       <p class="zoom-area">
-        <b>Pagina no encontrada</b>
+        <b className="title-error">Pagina no encontrada</b>
       </p>
       <section class="error-container">
         <span>
@@ -15,7 +15,7 @@ const Error404 = () => {
         </span>
       </section>
       <div class="link-container">
-        <a target="_blank" href="http://localhost:5173/" class="more-link">
+        <a href="/" class="log-in-button button">
           Volver al inicio
         </a>
       </div>

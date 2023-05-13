@@ -16,6 +16,7 @@ html::-webkit-scrollbar {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(245, 231, 231, 0.8);
+  padding-top: 80px;
 
   height: 60vh;
   width: 30vw;
@@ -337,16 +338,19 @@ select {
   border: none;
   border-radius: 15px;
   box-shadow: 0 9px #999;
+  text-decoration: None;
 }
 
 .button:hover {
   background-color: #274585;
+  text-decoration: None;
 }
 
 .button:active {
   background-color: #2466f7;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+  text-decoration: None;
 }
 
 .select-user {
@@ -511,16 +515,11 @@ select {
   }
 }
 
-/* demo stuff */
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
 .title-error {
   text-align: center;
   margin: 30px 15px;
+  color: white;
+  font-size: xx-large;
 }
 .zoom-area {
   max-width: 490px;
@@ -529,7 +528,9 @@ select {
   text-align: center;
 }
 .link-container {
+  display: flex;
   text-align: center;
+  justify-content: center;
 }
 a.more-link {
   text-transform: uppercase;
@@ -545,4 +546,14 @@ a.more-link {
   text-decoration: none;
   margin-top: 50px;
   letter-spacing: 1px;
+}
+
+.image {
+  position: absolute;
+  top: 15px;
+}
+
+img {
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
