@@ -100,7 +100,7 @@ const CreateActivity = () => {
           <label htmlFor="">Titulo</label>
           <input
             type="text"
-            className="text-box"
+            className="text-box form-user"
             value={activity.title}
             onChange={(e) => {
               const value = e.target.value;
@@ -116,7 +116,7 @@ const CreateActivity = () => {
           <select
             name="role"
             id="role"
-            className="text-box"
+            className="text-box  form-user"
             value={activity.mandated}
             onChange={(e) => {
               setActivity({ ...activity, mandated: parseInt(e.target.value) });
@@ -135,11 +135,11 @@ const CreateActivity = () => {
           </select>
         </div>
         <div className="data-colab">
-          <label htmlFor="">Descripcion</label>
+          <label htmlFor="description">Descripcion</label>
           <textarea
-            name=""
-            id=""
-            className="text-box description"
+            name="description"
+            id="description"
+            className="text-box description form-user"
             value={activity.description}
             onChange={(e) => {
               const value = e.target.value;
@@ -151,11 +151,11 @@ const CreateActivity = () => {
           ></textarea>
         </div>
         <div className="data-colab">
-          <label htmlFor="">Relevancia</label>
+          <label htmlFor="relevance">Relevancia</label>
           <select
             name="relevance"
             id="relevance"
-            className="text-box"
+            className="text-box form-user"
             value={activity.relevance}
             onChange={(e) =>
               setActivity({ ...activity, relevance: parseInt(e.target.value) })
@@ -171,10 +171,12 @@ const CreateActivity = () => {
         </div>
 
         <div className="data-colab">
-          <label htmlFor="">Inicio</label>
+          <label htmlFor="date">Inicio</label>
           <input
+            id="date"
+            name="date"
             type="date"
-            className="text-box"
+            className="text-box form-user"
             value={activity.date_start}
             onChange={(e) =>
               setActivity({ ...activity, date_start: e.target.value })
@@ -183,10 +185,12 @@ const CreateActivity = () => {
           />
         </div>
         <div className="data-colab">
-          <label htmlFor="">Fin</label>
+          <label htmlFor="date-end">Fin</label>
           <input
+            id="date-end"
+            name="date-end"
             type="date"
-            className="text-box"
+            className="text-box form-user"
             value={activity.date_end}
             onChange={(e) =>
               setActivity({ ...activity, date_end: e.target.value })
@@ -276,9 +280,12 @@ export const GetActivities = () => {
       <div className="box">
         <div className="change-user">
           <div className="user-edit">
-            <label htmlFor="">Titulo</label>
+            <label htmlFor="title">Titulo</label>
             <input
+              id="title"
+              name="title"
               type="text"
+              className="form-user"
               onChange={(e) => {
                 const value = e.target.value;
                 if (!value.startsWith(" ")) {
@@ -290,11 +297,11 @@ export const GetActivities = () => {
             />
           </div>
           <div className="user-edit">
-            <label htmlFor="">Encargado</label>
+            <label htmlFor="mandated">Encargado</label>
             <select
-              name="role"
-              id="role"
-              className="text-box"
+              name="mandated"
+              id="mandated"
+              className="form-user"
               value={newData.activity_mandated}
               onChange={(e) => {
                 setNewData({
@@ -316,11 +323,11 @@ export const GetActivities = () => {
             </select>
           </div>
           <div className="user-edit">
-            <label htmlFor="">Relevancia</label>
+            <label htmlFor="relevance">Relevancia</label>
             <select
               name="relevance"
               id="relevance"
-              className="text-box"
+              className="form-user"
               value={newData.relevance}
               onChange={(e) =>
                 setNewData({ ...newData, relevance: parseInt(e.target.value) })
@@ -335,11 +342,11 @@ export const GetActivities = () => {
             </select>
           </div>
           <div className="user-edit">
-            <label htmlFor="">Descripcion</label>
+            <label htmlFor="description">Descripcion</label>
             <textarea
-              name=""
-              id=""
-              className="description"
+              name="description"
+              id="description"
+              className="description form-user"
               value={newData.activity_description}
               onChange={(e) => {
                 const value = e.target.value;
@@ -350,9 +357,12 @@ export const GetActivities = () => {
             ></textarea>
           </div>
           <div className="user-edit">
-            <label htmlFor="">Fecha fin</label>
+            <label htmlFor="date">Fecha fin</label>
             <input
+              id="date"
+              name="date"
               type="date"
+              className="form-user"
               onChange={(e) => {
                 setNewData({ ...newData, date_end: e.target.value });
                 required;
@@ -362,11 +372,11 @@ export const GetActivities = () => {
             />
           </div>
           <div className="user-edit">
-            <label htmlFor="">Estado</label>
+            <label htmlFor="state">Estado</label>
             <select
-              name="relevance"
-              id="relevance"
-              className="text-box"
+              name="state"
+              id="state"
+              className="form-user"
               value={newData.id_state}
               onChange={(e) =>
                 setNewData({ ...newData, id_state: parseInt(e.target.value) })

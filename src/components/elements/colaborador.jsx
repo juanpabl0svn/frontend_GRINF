@@ -82,7 +82,7 @@ const AddData = () => {
           <select
             name="role"
             id="role"
-            className="text-box"
+            className="form-user"
             value={activity.id_activity}
             onChange={(e) =>
               setActivity({
@@ -104,11 +104,11 @@ const AddData = () => {
           </select>
         </div>
         <div className="data-colab">
-          <label htmlFor="">Descripcion</label>
+          <label htmlFor="description">Descripcion</label>
           <textarea
-            name=""
-            id=""
-            className="text-box description"
+            name="description"
+            id="description"
+            className="text-box description form-user"
             value={activity.description}
             onChange={(e) => {
               const value = e.target.value;
@@ -121,10 +121,12 @@ const AddData = () => {
           ></textarea>
         </div>
         <div className="data-colab">
-          <label htmlFor="">Inicio</label>
+          <label htmlFor="date">Inicio</label>
           <input
+            id="date"
+            name="date"
             type="date"
-            className="text-box"
+            className="text-box form-user"
             value={activity.date_end}
             onChange={(e) =>
               setActivity({ ...activity, date_end: e.target.value })
@@ -133,10 +135,12 @@ const AddData = () => {
           />
         </div>
         <div className="data-colab">
-          <label htmlFor="">Fin</label>
+          <label htmlFor="date-end">Fin</label>
           <input
+            id="date-end"
+            name="date-end"
             type="date"
-            className="text-box"
+            className="text-box form-user"
             value={activity.date_start}
             onChange={(e) =>
               setActivity({ ...activity, date_start: e.target.value })
@@ -148,7 +152,7 @@ const AddData = () => {
           <label htmlFor="">Tiempo trabajado</label>
           <input
             type="number"
-            className="text-box"
+            className="text-box form-user"
             min={0}
             max={60 * 24}
             value={activity.time_worked}
@@ -168,7 +172,7 @@ const AddData = () => {
           <label htmlFor="">Tiempo pagado</label>
           <input
             type="number"
-            className="text-box"
+            className="text-box form-user"
             value={activity.paid_time}
             onChange={(e) =>
               setActivity({ ...activity, paid_time: parseInt(e.target.value) })

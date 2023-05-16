@@ -274,6 +274,7 @@ export function SearchUsers() {
             <label htmlFor="">Usuario</label>
             <input
               type="text"
+              className="form-user"
               onChange={(e) => {
                 const value = e.target.value;
                 if (!value.startsWith(" ")) {
@@ -288,6 +289,7 @@ export function SearchUsers() {
             <label htmlFor="">Nombre</label>
             <input
               type="text"
+              className="form-user"
               onChange={(e) => {
                 const value = e.target.value;
                 if (!value.startsWith(" ")) {
@@ -302,6 +304,7 @@ export function SearchUsers() {
             <label htmlFor="">Apellido</label>
             <input
               type="text"
+              className="form-user"
               onChange={(e) => {
                 const value = e.target.value;
                 if (!value.startsWith(" ")) {
@@ -318,6 +321,7 @@ export function SearchUsers() {
 
             <input
               type="text"
+              className="form-user"
               onChange={(e) => {
                 const value = e.target.value;
                 if (!value.startsWith(" ")) {
@@ -330,10 +334,11 @@ export function SearchUsers() {
           </div>
 
           <div className="user-edit">
-            <label htmlFor="">Rol</label>
+            <label htmlFor="role">Rol</label>
 
             <select
               name="role"
+              className="form-user"
               id="role"
               value={newData.id_role}
               onChange={(e) =>
@@ -347,11 +352,12 @@ export function SearchUsers() {
           </div>
 
           <div className="user-edit">
-            <label htmlFor="">Area</label>
+            <label htmlFor="area">Area</label>
 
             <select
-              name="role"
-              id="role"
+              name="area"
+              id="area"
+              className="form-user"
               value={newData.id_area}
               onChange={(e) =>
                 setNewData({ ...newData, id_area: e.target.value })
