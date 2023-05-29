@@ -6,9 +6,21 @@ html {
   background-size: cover;
 }
 
+*{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+input{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+
 html::-webkit-scrollbar {
   -webkit-appearance: none;
 }
+
+
 
 .card {
   position: absolute;
@@ -18,7 +30,7 @@ html::-webkit-scrollbar {
   background-color: rgba(245, 231, 231, 0.8);
   padding-top: 80px;
 
-  height: 60vh;
+  height: 65vh;
   width: 30vw;
   border-radius: 20px;
 
@@ -30,6 +42,8 @@ html::-webkit-scrollbar {
 }
 
 .form {
+  position: relative;
+  top:20px;
   display: flex;
   flex-direction: column;
   width: 20vw;
@@ -114,6 +128,7 @@ a:hover {
   flex-direction: column;
   align-items: center;
   gap: 2px;
+  width: 15vw;
 }
 
 .form-user {
@@ -122,6 +137,18 @@ a:hover {
   outline: 10px;
   padding: 8px;
   text-align: center;
+  width: 100%;
+}
+
+.text-box{
+  position: relative;
+  left: 0;
+  border-radius: 10px;
+  border: 2px solid;
+  outline: 10px;
+  padding: 8px;
+  text-align: center;
+  width: 48%;
 }
 
 .scroll {
@@ -177,7 +204,7 @@ a:hover {
   align-items: center;
 
   width: 75vw;
-  gap: 84px;
+  gap: 94px;
 }
 
 .title-item {
@@ -196,10 +223,10 @@ a:hover {
   position: absolute;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: left;
   top: 0px;
-  right: -125px;
-  width: 120px;
+  right: -145px;
+  width: 130px;
   background: #ffffff;
   border: 1px solid;
   box-shadow: 5px 5px rgba(94, 92, 92, 0.5);
@@ -247,7 +274,7 @@ a:hover {
   flex-direction: column;
   align-items: left;
   width: 30vw;
-  gap: 10px;
+  gap:16px;
 }
 
 .description {
@@ -260,7 +287,7 @@ a:hover {
   display: flex;
   align-items: center;
   width: 17px;
-  right: 330px;
+  right: 410px;
   gap: 4px;
 }
 
@@ -299,6 +326,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 20px;
+  width: 18vw;
 }
 
 input[type="text"] {
@@ -562,7 +590,14 @@ a.more-link {
   top: 15px;
 }
 
+.image-change-password {
+  position: absolute;
+  top: 0;
+}
+
 img {
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
+
+

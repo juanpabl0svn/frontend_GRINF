@@ -131,10 +131,10 @@ export default function NewUser() {
           </select>
         </div>
         <div className="info">
-          <label htmlFor="role">Area</label>
+          <label htmlFor="area">Area</label>
           <select
-            name="role"
-            id="role"
+            name="area"
+            id="area"
             className="form-user"
             value={data.area}
             onChange={(e) => setData({ ...data, area: e.target.value })}

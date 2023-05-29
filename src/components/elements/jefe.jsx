@@ -100,7 +100,7 @@ const CreateActivity = () => {
           <label htmlFor="">Titulo</label>
           <input
             type="text"
-            className="text-box form-user"
+            className="text-box"
             value={activity.title}
             onChange={(e) => {
               const value = e.target.value;
@@ -116,7 +116,7 @@ const CreateActivity = () => {
           <select
             name="role"
             id="role"
-            className="text-box  form-user"
+            className="text-box"
             value={activity.mandated}
             onChange={(e) => {
               setActivity({ ...activity, mandated: parseInt(e.target.value) });
@@ -139,7 +139,7 @@ const CreateActivity = () => {
           <textarea
             name="description"
             id="description"
-            className="text-box description form-user"
+            className="text-box description"
             value={activity.description}
             onChange={(e) => {
               const value = e.target.value;
@@ -155,7 +155,7 @@ const CreateActivity = () => {
           <select
             name="relevance"
             id="relevance"
-            className="text-box form-user"
+            className="text-box"
             value={activity.relevance}
             onChange={(e) =>
               setActivity({ ...activity, relevance: parseInt(e.target.value) })
@@ -176,7 +176,7 @@ const CreateActivity = () => {
             id="date"
             name="date"
             type="date"
-            className="text-box form-user"
+            className="text-box"
             value={activity.date_start}
             onChange={(e) =>
               setActivity({ ...activity, date_start: e.target.value })
@@ -190,7 +190,7 @@ const CreateActivity = () => {
             id="date-end"
             name="date-end"
             type="date"
-            className="text-box form-user"
+            className="text-box"
             value={activity.date_end}
             onChange={(e) =>
               setActivity({ ...activity, date_end: e.target.value })

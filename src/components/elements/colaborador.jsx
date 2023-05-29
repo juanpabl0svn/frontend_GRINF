@@ -82,7 +82,7 @@ const AddData = () => {
           <select
             name="role"
             id="role"
-            className="form-user"
+            className="text-box"
             value={activity.id_activity}
             onChange={(e) =>
               setActivity({
@@ -126,7 +126,7 @@ const AddData = () => {
             id="date"
             name="date"
             type="date"
-            className="text-box form-user"
+            className="text-box"
             value={activity.date_end}
             onChange={(e) =>
               setActivity({ ...activity, date_end: e.target.value })
@@ -140,7 +140,7 @@ const AddData = () => {
             id="date-end"
             name="date-end"
             type="date"
-            className="text-box form-user"
+            className="text-box"
             value={activity.date_start}
             onChange={(e) =>
               setActivity({ ...activity, date_start: e.target.value })
@@ -152,7 +152,7 @@ const AddData = () => {
           <label htmlFor="">Tiempo trabajado</label>
           <input
             type="number"
-            className="text-box form-user"
+            className="text-box"
             min={0}
             max={60 * 24}
             value={activity.time_worked}
@@ -172,7 +172,7 @@ const AddData = () => {
           <label htmlFor="">Tiempo pagado</label>
           <input
             type="number"
-            className="text-box form-user"
+            className="text-box"
             value={activity.paid_time}
             onChange={(e) =>
               setActivity({ ...activity, paid_time: parseInt(e.target.value) })

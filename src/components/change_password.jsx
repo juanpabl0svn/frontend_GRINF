@@ -46,6 +46,9 @@ export default function ChangePassword() {
 
   return (
     <div className="card">
+      <div className="image-change-password">
+        <img src="../images/Logo.png" alt="" />
+      </div>
       <form className="form" onSubmit={(e) => setPassword(e)}>
         <div className="data">
           <label htmlFor="username" id="username-label">
