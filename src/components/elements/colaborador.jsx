@@ -11,8 +11,7 @@ const AddData = () => {
     id_user: user.id_user,
     id_activity: 0,
     description: "",
-    date_start: "",
-    date_end: "",
+    actual_date: new Date().toJSON().slice(0, 10).replace("/-/g", "/"),
     time_worked: 0,
     paid_time: 0,
   });
@@ -34,8 +33,7 @@ const AddData = () => {
       id_user: user.id_user,
       id_activity: 0,
       description: "",
-      date_start: "",
-      date_end: "",
+      actual_date: new Date().toJSON().slice(0, 10).replace("/-/g", "/"),
       time_worked: 0,
       paid_time: 0,
     });
@@ -120,34 +118,7 @@ const AddData = () => {
             required
           ></textarea>
         </div>
-        <div className="data-colab">
-          <label htmlFor="date">Inicio</label>
-          <input
-            id="date"
-            name="date"
-            type="date"
-            className="text-box"
-            value={activity.date_end}
-            onChange={(e) =>
-              setActivity({ ...activity, date_end: e.target.value })
-            }
-            required
-          />
-        </div>
-        <div className="data-colab">
-          <label htmlFor="date-end">Fin</label>
-          <input
-            id="date-end"
-            name="date-end"
-            type="date"
-            className="text-box"
-            value={activity.date_start}
-            onChange={(e) =>
-              setActivity({ ...activity, date_start: e.target.value })
-            }
-            required
-          />
-        </div>
+
         <div className="data-colab">
           <label htmlFor="">Tiempo trabajado</label>
           <input

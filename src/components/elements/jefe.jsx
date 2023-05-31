@@ -192,6 +192,7 @@ const CreateActivity = () => {
             type="date"
             className="text-box"
             value={activity.date_end}
+            min={activity.date_start}
             onChange={(e) =>
               setActivity({ ...activity, date_end: e.target.value })
             }
